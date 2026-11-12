@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="t d">
+  <title id="t">Kursi kayu jati</title>
+  <desc id="d">Ilustrasi kursi tanpa penyangga lengan dari kayu jati dengan finishing minyak alami.</desc>
+  <rect width="800" height="600" fill="#EBE3D4"/>
+  <rect y="468" width="800" height="132" fill="#D7C9B2"/>
+  <ellipse cx="400" cy="506" rx="230" ry="28" fill="#AE9B7E" opacity=".4"/>
+  <g>
+    <path d="M284 246h232v30H284z" fill="#B08C63"/>
+    <path d="M300 276h200v26H300z" fill="#9C7B55"/>
+    <path d="M304 302l-24 160M496 302l24 160M340 302l-10 160M460 302l10 160" stroke="#866747" stroke-width="13" stroke-linecap="round"/>
+    <path d="M258 198c0-16 12-28 28-28h228c16 0 28 12 28 28v60H258z" fill="#C19C70"/>
+    <path d="M278 194c0-9 7-16 16-16h212c9 0 16 7 16 16v40H278z" fill="#CDA87C"/>
+    <path d="M272 258v-18M528 258v-18" stroke="#8B6B4A" stroke-width="10" stroke-linecap="round"/>
+    <path d="M330 330c0-10 8-18 18-18h104c10 0 18 8 18 18v20H330z" fill="#D4C3A6"/>
+    <path d="M372 392c14-10 42-10 56 0" stroke="#C7B699" stroke-width="3" fill="none"/>
+  </g>
+  <g>
+    <path d="M596 410c0-14 11-25 25-25h62c14 0 25 11 25 25v58H596z" fill="#D8CBB4"/>
+    <path d="M620 385c0-30 12-50 30-50s30 20 30 50" fill="none" stroke="#536147" stroke-width="6"/>
+    <path d="M630 385c8-16 18-24 30-24s22 8 30 24" fill="#65725A"/>
+  </g>
+  <path d="M118 212h140" stroke="#C6B69C" stroke-width="2"/>
+  <path d="M118 252h96" stroke="#C6B69C" stroke-width="2"/>
+</svg>

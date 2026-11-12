@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="t d">
+  <title id="t">Kursi dan meja kayu di ruang putih tulang</title>
+  <desc id="d">Ilustrasi orisinal kursi kayu jati dan meja samping di dekat dinding zaitun.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#EEE6D6"/><stop offset="1" stop-color="#DED2BD"/></linearGradient>
+    <filter id="sh"><feGaussianBlur stdDeviation="14"/></filter>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="0" y="0" width="245" height="600" fill="#47523D"/>
+  <rect x="0" y="470" width="800" height="130" fill="#D2C3A9"/>
+  <path d="M0 492h800" stroke="#BEAC8F" stroke-width="3"/>
+  <ellipse cx="460" cy="510" rx="260" ry="32" fill="#A39074" opacity=".4" filter="url(#sh)"/>
+  <g>
+    <path d="M318 300h164v34H318z" fill="#B08D64"/>
+    <path d="M334 334h132v26H334z" fill="#9A7852"/>
+    <path d="M330 360l-22 150M456 360l22 150M356 360l-8 150M430 360l8 150" stroke="#866747" stroke-width="12" stroke-linecap="round"/>
+    <path d="M300 230c0-16 12-28 28-28h144c16 0 28 12 28 28v70H300z" fill="#C19C70"/>
+    <path d="M324 220c0-8 6-14 14-14h124c8 0 14 6 14 14v50H324z" fill="#CBA77B"/>
+    <path d="M314 300v-42M486 300v-42" stroke="#8B6B4A" stroke-width="10" stroke-linecap="round"/>
+  </g>
+  <g>
+    <rect x="556" y="352" width="168" height="16" rx="7" fill="#9A7852"/>
+    <path d="M584 368v112M696 368v112" stroke="#866747" stroke-width="11" stroke-linecap="round"/>
+    <path d="M584 424h112" stroke="#866747" stroke-width="4"/>
+    <path d="M600 332h36c12 0 20 9 20 20h-76c0-11 8-20 20-20z" fill="#D9CDB8"/>
+    <path d="M618 332v-28" stroke="#526047" stroke-width="4"/>
+    <path d="M618 304c-20-16-30-36-26-58 22 12 34 30 34 54 14-14 32-18 50-12-12 22-32 32-58 30z" fill="#5D6A51"/>
+  </g>
+  <rect x="86" y="148" width="10" height="150" fill="#D8CCB8"/>
+  <rect x="60" y="298" width="62" height="10" rx="5" fill="#D8CCB8"/>
+  <rect x="46" y="106" width="170" height="170" fill="#F6F0E4" opacity=".06"/>
+  <g>
+    <path d="M254 520h430" stroke="#B5A286" stroke-width="3"/>
+    <path d="M300 544h340" stroke="#BCAA8D" stroke-width="2" opacity=".7"/>
+  </g>
+</svg>

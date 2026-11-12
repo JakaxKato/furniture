@@ -1,0 +1,40 @@
+{
+  "name": "@teduh/api",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "seed": "tsx src/scripts/seed.ts",
+    "indexes": "tsx src/scripts/ensureIndexes.ts",
+    "bootstrap-admin": "tsx src/scripts/bootstrapAdmin.ts",
+    "reconcile": "tsx src/scripts/reconcile.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e:server": "tsx src/scripts/e2eServer.ts"
+  },
+  "dependencies": {
+    "argon2": "^0.41.1",
+    "cookie-parser": "^1.4.7",
+    "express": "^4.21.1",
+    "helmet": "^8.0.0",
+    "mongoose": "^8.8.4",
+    "otplib": "^12.0.1",
+    "pino": "^9.5.0",
+    "pino-http": "^10.3.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.1",
+    "@types/supertest": "^6.0.2",
+    "mongodb-memory-server": "^10.1.2",
+    "supertest": "^7.0.0",
+    "tsx": "^4.19.2",
+    "vitest": "^5.1.0"
+  }
+}

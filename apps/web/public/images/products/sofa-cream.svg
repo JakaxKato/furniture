@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="t d">
+  <title id="t">Sofa dua dudukan linen krem</title>
+  <desc id="d">Ilustrasi sofa dua dudukan berwarna krem dengan kaki kayu di ruang putih tulang dan panel zaitun.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#EFE7D9"/><stop offset="1" stop-color="#E2D6C1"/></linearGradient>
+    <linearGradient id="fabric" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#F2E9D8"/><stop offset="1" stop-color="#DED0B8"/></linearGradient>
+    <filter id="sh"><feGaussianBlur stdDeviation="14"/></filter>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="0" y="0" width="190" height="600" fill="#46523C"/>
+  <rect x="190" y="0" width="6" height="600" fill="#35412E"/>
+  <rect x="0" y="462" width="800" height="138" fill="#D3C4AC"/>
+  <path d="M0 482h800" stroke="#C1B094" stroke-width="2"/>
+  <ellipse cx="470" cy="510" rx="300" ry="32" fill="#A89579" opacity=".42" filter="url(#sh)"/>
+  <g>
+    <path d="M218 370c0-42 24-68 64-68h368c40 0 64 26 64 68v112c0 15-11 26-26 26H244c-15 0-26-11-26-26z" fill="url(#fabric)"/>
+    <path d="M242 296c0-33 19-53 50-53h230c31 0 50 20 50 53v80H242z" fill="#EDE3D0"/>
+    <path d="M278 252c0-19 12-31 30-31h92c18 0 30 12 30 31v62H278z" fill="#E8DCC6"/>
+    <path d="M458 252c0-19 12-31 30-31h58c18 0 30 12 30 31v62H458z" fill="#E8DCC6"/>
+    <path d="M230 336c-22 0-36 16-36 36v76c0 21 16 37 37 37h22c20 0 36-16 36-37v-76c0-20-15-36-35-36z" fill="#E8DBC4"/>
+    <path d="M712 336c22 0 36 16 36 36v76c0 21-16 37-37 37h-22c-20 0-36-16-36-37v-76c0-20 15-36 35-36z" fill="#E8DBC4"/>
+    <path d="M294 430h344" stroke="#CDBCA1" stroke-width="2"/>
+    <path d="M252 352v140M700 352v140" stroke="#D2C3A8" stroke-width="2"/>
+    <path d="M282 528v36M670 528v36" stroke="#806A4E" stroke-width="13" stroke-linecap="round"/>
+    <rect x="360" y="366" width="96" height="86" rx="12" fill="#6D795D"/>
+    <rect x="374" y="380" width="68" height="58" rx="8" fill="#7E8A6F"/>
+    <rect x="520" y="380" width="82" height="74" rx="10" fill="#BCA889"/>
+    <path d="M538 418c16-14 34-16 50-4" stroke="#D2C1A4" stroke-width="3" fill="none"/>
+  </g>
+  <g>
+    <rect x="66" y="322" width="78" height="10" rx="5" fill="#91795B"/>
+    <path d="M82 332v122M128 332v122" stroke="#7C6549" stroke-width="8" stroke-linecap="round"/>
+    <path d="M82 386h46" stroke="#7C6549" stroke-width="4"/>
+    <path d="M100 306c-18-18-26-38-22-58 20 12 30 30 28 54 14-12 30-14 46-8-12 18-30 26-52 24z" fill="#5C694F"/>
+  </g>
+  <rect x="600" y="160" width="120" height="8" rx="4" fill="#C9B99F"/>
+  <path d="M618 168v114M702 168v114" stroke="#8C7457" stroke-width="6"/>
+  <path d="M618 168h84" stroke="#8C7457" stroke-width="6"/>
+  <path d="M640 136c10-22 26-32 48-30-10 22-26 33-46 32" fill="#66735A" opacity=".7"/>
+</svg>

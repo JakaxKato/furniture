@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="t d">
+  <title id="t">Kasur pegas bersaku</title>
+  <desc id="d">Ilustrasi kasur tebal dengan penutup kain abu hangat dan bantal putih tulang.</desc>
+  <rect width="800" height="600" fill="#E7DFD1"/>
+  <rect y="450" width="800" height="150" fill="#D1C3AC"/>
+  <ellipse cx="400" cy="500" rx="310" ry="36" fill="#AC997D" opacity=".35"/>
+  <rect x="120" y="258" width="560" height="194" rx="22" fill="#E5DCCB"/>
+  <rect x="120" y="258" width="560" height="52" rx="26" fill="#EDE5D7"/>
+  <rect x="120" y="310" width="560" height="20" fill="#D8CCB8"/>
+  <path d="M150 356h500M150 394h500" stroke="#CFC1AB" stroke-width="2"/>
+  <path d="M120 336h560" stroke="#C8B89F" stroke-width="2"/>
+  <rect x="110" y="452" width="580" height="26" rx="8" fill="#7E6549"/>
+  <path d="M156 478v62M644 478v62" stroke="#654F37" stroke-width="14" stroke-linecap="round"/>
+  <rect x="178" y="210" width="170" height="68" rx="26" fill="#F8F4EA"/>
+  <rect x="454" y="214" width="170" height="64" rx="26" fill="#F4EFE4"/>
+  <path d="M202 238h122M478 240h122" stroke="#D9CDB9" stroke-width="2"/>
+  <g>
+    <path d="M100 290c0-12 9-21 21-21h32c12 0 21 9 21 21v155H100z" fill="#CBBDA6"/>
+    <path d="M108 320h58M108 356h58M108 392h58" stroke="#B8A88F" stroke-width="2"/>
+  </g>
+  <rect x="606" y="110" width="110" height="8" rx="4" fill="#C9B99F"/>
+  <path d="M624 118v96M700 118v96" stroke="#8A7153" stroke-width="6"/>
+</svg>

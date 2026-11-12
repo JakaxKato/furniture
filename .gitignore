@@ -1,0 +1,15 @@
+node_modules/
+dist/
+var/
+.env
+.env.*
+!.env.example
+coverage/
+test-results/
+playwright-report/
+*.log
+.DS_Store
+apps/api/tests/.mongo-uri
+.commandcode/
+.vscode/
+.idea/

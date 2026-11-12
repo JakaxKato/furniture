@@ -1,0 +1,42 @@
+{
+  "name": "teduh-store",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Toko online kasur, bantal, dan furnitur Teduh (demo MERN TypeScript)",
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c green,cyan \"npm run dev -w @teduh/api\" \"npm run dev -w @teduh/web\"",
+    "build": "npm run build -w @teduh/api && npm run build -w @teduh/web",
+    "start": "npm run start -w @teduh/api",
+    "seed": "npm run seed -w @teduh/api",
+    "indexes": "npm run indexes -w @teduh/api",
+    "bootstrap-admin": "npm run bootstrap-admin -w @teduh/api",
+    "reconcile": "npm run reconcile -w @teduh/api",
+    "test": "npm run test -w @teduh/api",
+    "test:e2e": "playwright test",
+    "lint": "eslint apps e2e playwright.config.ts",
+    "typecheck": "npm run typecheck -w @teduh/api && npm run typecheck -w @teduh/web",
+    "reconcile:loop": "npm run reconcile -w @teduh/api -- --loop"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@playwright/test": "^1.49.0",
+    "concurrently": "^9.1.0",
+    "eslint": "^9.15.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "globals": "^15.12.0",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.16.0"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "overrides": {
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "^11.0.8"
+    }
+  }
+}

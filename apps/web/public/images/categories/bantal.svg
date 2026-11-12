@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="t d">
+  <title id="t">Tumpukan bantal di bangku kayu</title>
+  <desc id="d">Ilustrasi orisinal dua bantal katun di atas bangku kayu dengan dinding putih tulang dan cahaya lembut.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#EFE8DA"/><stop offset="1" stop-color="#E2D8C5"/></linearGradient>
+    <linearGradient id="p1" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#FAF7EE"/><stop offset="1" stop-color="#E9E1D1"/></linearGradient>
+    <linearGradient id="p2" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#7B856B"/><stop offset="1" stop-color="#5D6851"/></linearGradient>
+    <filter id="sh"><feGaussianBlur stdDeviation="14"/></filter>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <path d="M560 0h240v600H560z" fill="#E8DFCF"/>
+  <rect x="0" y="470" width="800" height="130" fill="#D3C5AD"/>
+  <path d="M0 490h800" stroke="#C1B094" stroke-width="2"/>
+  <ellipse cx="400" cy="520" rx="270" ry="28" fill="#A9977C" opacity=".4" filter="url(#sh)"/>
+  <g>
+    <rect x="170" y="386" width="460" height="20" rx="8" fill="#927A5B"/>
+    <path d="M202 406v96M598 406v96" stroke="#7B6448" stroke-width="12" stroke-linecap="round"/>
+    <path d="M202 470h396" stroke="#7B6448" stroke-width="5"/>
+  </g>
+  <g transform="rotate(-4 340 310)">
+    <path d="M252 232c0-24 18-40 44-40h146c26 0 44 16 44 40v124c0 26-18 42-44 42H296c-26 0-44-16-44-42z" fill="url(#p1)"/>
+    <path d="M272 232c0-14 10-24 28-24h146c18 0 28 10 28 24v124c0 14-10 24-28 24H300c-18 0-28-10-28-24z" fill="#F7F2E7" opacity=".65"/>
+    <path d="M286 320c28-14 56-14 86 0 24 11 48 11 72 0" stroke="#D8CDBB" stroke-width="2" fill="none"/>
+  </g>
+  <g transform="rotate(5 520 300)">
+    <path d="M420 220c0-22 16-36 40-36h130c24 0 40 14 40 36v116c0 24-16 38-40 38H460c-24 0-40-14-40-38z" fill="url(#p2)"/>
+    <path d="M442 220c0-12 9-20 24-20h122c15 0 24 8 24 20v116c0 12-9 20-24 20H466c-15 0-24-8-24-20z" fill="#6C7860" opacity=".55"/>
+    <path d="M454 300c22-10 44-10 66 0 18 8 36 8 54 0" stroke="#4D5944" stroke-width="2" fill="none"/>
+  </g>
+  <g>
+    <path d="M102 354c0-12 9-22 22-22h58c13 0 22 10 22 22v36h-102z" fill="#B98A67"/>
+    <path d="M120 332c0-34 14-56 34-56s34 22 34 56" fill="none" stroke="#526047" stroke-width="7"/>
+    <path d="M126 342c10-22 22-30 34-30s25 8 34 30" fill="#637057"/>
+  </g>
+  <circle cx="692" cy="120" r="3" fill="#B9A98E"/>
+  <circle cx="692" cy="150" r="3" fill="#B9A98E"/>
+  <circle cx="692" cy="180" r="3" fill="#B9A98E"/>
+</svg>

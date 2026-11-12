@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">Ruang keluarga dengan sofa krem</title>
+  <desc id="desc">Ilustrasi orisinal ruang putih tulang dengan sofa linen krem, panel dinding zaitun, meja samping kayu, tanaman, dan cahaya jendela.</desc>
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0e8d9"/>
+      <stop offset="1" stop-color="#e5dac6"/>
+    </linearGradient>
+    <linearGradient id="sofa" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f5eddd"/>
+      <stop offset="1" stop-color="#dfd0b6"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dbcbb1"/>
+      <stop offset="1" stop-color="#cdbb9f"/>
+    </linearGradient>
+    <linearGradient id="light" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fffaf0" stop-opacity=".8"/>
+      <stop offset="1" stop-color="#fffaf0" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".025"/></feComponentTransfer>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#wall)"/>
+  <rect x="0" y="0" width="118" height="900" fill="#3f4a38"/>
+  <rect x="118" y="0" width="5" height="900" fill="#33402d"/>
+  <rect x="0" y="0" width="123" height="18" fill="#2f392b"/>
+  <path d="M123 700h1077v200H123z" fill="url(#floor)"/>
+  <path d="M123 702h1077" stroke="#b9a487" stroke-width="3"/>
+  <path d="M240 760h820M320 800h660" stroke="#c3b69f" stroke-width="2" opacity=".65"/>
+  <rect x="850" y="70" width="260" height="410" rx="130" fill="#f7f1e4"/>
+  <rect x="866" y="86" width="228" height="378" rx="114" fill="#efe6d4"/>
+  <path d="M980 86v378M866 275h228" stroke="#ddcfb9" stroke-width="3"/>
+  <g>
+    <rect x="166" y="338" width="8" height="310" fill="#8d7658"/>
+    <rect x="138" y="646" width="156" height="10" rx="5" fill="#8d7658"/>
+    <path d="M222 452c-52-30-88-76-92-132 62 16 104 60 118 130 25-69 69-108 132-118-9 60-48 105-112 126" fill="#526046"/>
+    <path d="M236 474c-18-45-48-73-90-88 6 45 34 78 82 96" fill="#68745a"/>
+    <path d="M246 440c30-44 66-64 110-64-18 45-54 68-104 74" fill="#5c6a50"/>
+    <path d="M196 650c14-52 30-90 52-116M252 650c-2-42-10-78-26-110" stroke="#425038" stroke-width="5" fill="none"/>
+    <path d="M190 646h80l-12-82h-56z" fill="#9a7e5c"/>
+  </g>
+  <ellipse cx="640" cy="764" rx="410" ry="46" fill="#b09a7c" opacity=".38" filter="url(#shadow)"/>
+  <rect x="180" y="754" width="880" height="28" rx="4" fill="#e4d6bf" opacity=".55"/>
+  <g>
+    <path d="M248 616c0-58 34-94 92-94h500c58 0 92 36 92 94v112c0 19-14 32-33 32H281c-19 0-33-13-33-32z" fill="url(#sofa)"/>
+    <path d="M290 512c0-48 28-76 74-76h300c46 0 74 28 74 76v108H290z" fill="#efe5d2"/>
+    <path d="M332 442c0-27 17-44 44-44h130c27 0 44 17 44 44v88H332z" fill="#eadfc9"/>
+    <path d="M574 442c0-27 17-44 44-44h88c27 0 44 17 44 44v88H574z" fill="#eadfc9"/>
+    <path d="M632 644h170c17 0 30 12 30 28v52H602v-52c0-16 13-28 30-28z" fill="#d6c4a8"/>
+    <path d="M246 584c-28 0-48 21-48 49v92c0 27 21 48 48 48h23c27 0 48-21 48-48v-92c0-28-20-49-48-49z" fill="#eadfc9"/>
+    <path d="M922 584c28 0 48 21 48 49v92c0 27-21 48-48 48h-23c-27 0-48-21-48-48v-92c0-28 20-49 48-49z" fill="#eadfc9"/>
+    <path d="M290 736h588" stroke="#cdbb9e" stroke-width="3"/>
+    <path d="M322 652v86M860 652v86" stroke="#d6c6ab" stroke-width="2"/>
+    <path d="M320 768v40M844 768v40" stroke="#80694d" stroke-width="16" stroke-linecap="round"/>
+    <rect x="392" y="652" width="128" height="94" rx="14" fill="#5a674f"/>
+    <rect x="408" y="668" width="96" height="62" rx="9" fill="#6b785d"/>
+    <rect x="678" y="662" width="104" height="84" rx="12" fill="#b59c7b"/>
+    <path d="M700 701c22-16 44-16 64-2" stroke="#cdbba0" stroke-width="3" fill="none"/>
+    <path d="M356 536c22-13 46-13 70 0M796 536c22-13 46-13 70 0" stroke="#cdbb9e" stroke-width="2" fill="none"/>
+  </g>
+  <g>
+    <rect x="982" y="618" width="152" height="16" rx="8" fill="#9d8260"/>
+    <path d="M1002 634h112l-11 114h-90z" fill="#8c7251"/>
+    <path d="M1022 748v36M1094 748v36" stroke="#6d573d" stroke-width="10" stroke-linecap="round"/>
+    <path d="M1036 584h46c16 0 28 12 28 28h-102c0-16 12-28 28-28z" fill="#e8deca"/>
+    <path d="M1060 584v-34" stroke="#4f5c46" stroke-width="4"/>
+    <circle cx="1060" cy="540" r="11" fill="#e8deca"/>
+  </g>
+  <g>
+    <rect x="372" y="168" width="382" height="310" fill="#faf5e9" stroke="#b6a486" stroke-width="5"/>
+    <rect x="398" y="194" width="330" height="258" fill="#d8ddcd"/>
+    <path d="M398 360c52-58 102-68 154-22 44 39 95 42 176-6v120H398z" fill="#8f9b81"/>
+    <circle cx="640" cy="258" r="32" fill="#f3eedf"/>
+    <path d="M398 330c42-24 84-24 126 0 36 20 72 20 108 0" stroke="#7b876c" stroke-width="6" fill="none" stroke-linecap="round"/>
+  </g>
+  <g>
+    <rect x="804" y="262" width="70" height="8" rx="4" fill="#c2af92"/>
+    <path d="M822 270v106M862 270v106M822 270h40" stroke="#9a805f" stroke-width="4"/>
+    <path d="M834 252c8-26 22-40 44-40-6 24-20 40-40 42" fill="#66735a" opacity=".8"/>
+  </g>
+  <path d="M123 0h1077v900H123z" fill="url(#light)" opacity=".22"/>
+  <rect width="1200" height="900" fill="#6a5438" opacity=".018" filter="url(#grain)"/>
+</svg>

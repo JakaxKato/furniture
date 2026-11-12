@@ -1,0 +1,38 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: teduh-mongo
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all", "--port", "27018"]
+    ports:
+      - "127.0.0.1:27018:27018"
+    volumes:
+      - teduh-mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--port", "27018", "--quiet", "--eval", "db.runCommand({ ping: 1 }).ok"]
+      interval: 3s
+      timeout: 5s
+      retries: 30
+
+  mongo-init:
+    image: mongo:7
+    container_name: teduh-mongo-init
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: "no"
+    entrypoint:
+      - bash
+      - -c
+      - |
+        mongosh --host mongo:27018 --port 27018 --quiet --eval "
+          try {
+            rs.status();
+            print('Replica set sudah aktif.');
+          } catch (e) {
+            rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: 'localhost:27018' }] });
+            print('Replica set rs0 dibuat pada port 27018.');
+          }
+        "
+
+volumes:
+  teduh-mongo-data:
