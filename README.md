@@ -1,6 +1,6 @@
-# Teduh — toko kasur, bantal, dan furnitur
+# Ruang Teduh — toko furnitur modern Indonesia
 
-Panduan fitur operasional, skenario demo recruiter, keputusan teknis, dan batas integrasi: [Portofolio Teduh](docs/PORTFOLIO.md).
+Panduan fitur operasional, skenario demo recruiter, keputusan teknis, dan batas integrasi: [Portofolio Ruang Teduh](docs/PORTFOLIO.md).
 
 MVP toko online Indonesia dengan **MongoDB + Mongoose, Express, React + Vite, dan TypeScript**. Storefront berbahasa Indonesia, harga Rupiah bilangan bulat, dimensi sentimeter, dan pembayaran Midtrans Snap dengan adapter simulasi untuk pengembangan/tes.
 
@@ -8,7 +8,7 @@ MVP toko online Indonesia dengan **MongoDB + Mongoose, Express, React + Vite, da
 
 ## Ringkasan yang sudah berjalan
 
-- Beranda dua kolom putih tulang–zaitun, judul serif, tiga pintu masuk kategori, dan satu sorotan koleksi dengan spesifikasi dari API.
+- Desain berdasarkan referensi Woodora: krem hangat, Plus Jakarta Sans lokal, foto furnitur, hero lebar, koleksi terbaru, filter jenis, cerita brand, dan katalog 14 produk. Identitas Ruang Teduh, bahasa Indonesia, dan harga Rupiah.
 - Katalog dengan pencarian, filter umum dan per kategori, urutan, paginasi, serta seluruh state di URL. Desktop memakai filter kiri dan grid tiga kolom; ponsel memakai dialog filter dua kolom dengan fokus kembali ke tombol.
 - Detail produk dengan galeri, varian, SKU, harga/stok per varian, spesifikasi, perawatan, dan tambah ke keranjang.
 - Keranjang tamu (localStorage) yang terbawa saat login, checkout dengan login, alamat tervalidasi, ongkir server per zona/kelas, total server, dan konfirmasi ulang bila ringkasan berubah.
@@ -17,7 +17,7 @@ MVP toko online Indonesia dengan **MongoDB + Mongoose, Express, React + Vite, da
 - Midtrans Snap di backend, verifikasi webhook dengan signature waktu konstan, pengambilan status langsung dari gateway, transisi idempoten, rekonsiliasi berkala, dan penanganan pembayaran terlambat/refund/chargeback.
 - Panel admin untuk produk/varian, stok, zona dan tarif, pesanan, kasus pembayaran, serta audit. Hak akses dipisah per peran dan MFA.
 - Sitemap, `robots.txt`, metadata server-side untuk halaman produk, URL kanonis, dan metadata klien.
-- Ilustrasi SVG orisinal untuk demo. Foto referensi tidak tersedia di workspace; desain diturunkan dari deskripsi dan aset dibuat khusus agar hak pakai jelas. Ganti dengan foto berlisensi sebelum rilis.
+- Foto dari referensi pengguna disimpan lokal; asal aset tercatat di `docs/reference-assets.json`. Font Plus Jakarta Sans dilengkapi lisensi OFL. Aset SVG lama tetap tersedia untuk snapshot pesanan lama.
 
 ## Stack dan struktur
 
@@ -29,6 +29,20 @@ e2e/     Tes Playwright (alur checkout, responsif, tangkapan visual)
 ```
 
 Produksi menggunakan **satu origin**: Express menyajikan `apps/web/dist` dan API `/api/v1`. Di pengembangan Vite mem-proxy `/api` ke API port 4000.
+
+## Memperbarui project yang sudah pernah dijalankan
+
+Dari terminal VS Code di folder project, nyalakan Docker Desktop lalu jalankan:
+
+```powershell
+docker compose up -d
+npm run catalog:upgrade
+npm run dev
+```
+
+Buka toko di http://localhost:5173 dan admin di http://localhost:5173/admin. Gunakan Node.js 22 LTS. Akun demo tetap sama. Perintah `catalog:upgrade` menambahkan produk yang belum ada dan mengarsipkan produk demo lama, tanpa mereset akun, pesanan, stok, atau perubahan pada produk baru. Aman dijalankan ulang. Jangan memakai `seed` untuk pembaruan database yang ingin dipertahankan karena seed membuat ulang seluruh data demo.
+
+Catatan desain dan pemetaan referensi: [Desain Ruang Teduh](docs/DESIGN.md).
 
 ## Mulai cepat
 

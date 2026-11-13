@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="t">
-  <title id="t">Teduh</title>
-  <rect width="64" height="64" rx="14" fill="#3F4A38"/>
+  <title id="t">Ruang Teduh</title>
+  <rect width="64" height="64" rx="14" fill="#282520"/>
   <path d="M18 42V27c0-6 4-10 10-10h8c6 0 10 4 10 10v15" fill="none" stroke="#F4EFE3" stroke-width="4" stroke-linecap="round"/>
-  <path d="M24 34h16" stroke="#C9A97C" stroke-width="4" stroke-linecap="round"/>
+  <path d="M24 34h16" stroke="#F5BE38" stroke-width="4" stroke-linecap="round"/>
 </svg>

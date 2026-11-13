@@ -29,7 +29,7 @@ test.describe('pemeriksaan visual', () => {
 
   test('halaman produk 1440', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 1000 });
-    await page.goto('/produk/sofa-dua-dudukan-linen');
+    await page.goto('/produk/serenity-lounge-chair');
     await page.waitForLoadState('networkidle');
     await page.screenshot({ path: 'test-results/visual/product-1440.png', fullPage: true });
   });

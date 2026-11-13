@@ -22,7 +22,7 @@ export function clearMailOutbox(): void {
 
 export async function sendPasswordResetEmail(to: string, name: string, token: string): Promise<void> {
   const resetUrl = `${env.APP_ORIGIN}/reset-kata-sandi?token=${encodeURIComponent(token)}`;
-  const subject = 'Atur ulang kata sandi Teduh';
+  const subject = 'Atur ulang kata sandi Ruang Teduh';
   const text = [
     `Halo ${name},`,
     '',

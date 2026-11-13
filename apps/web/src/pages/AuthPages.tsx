@@ -26,7 +26,7 @@ export function LoginPage() {
 
   return (
     <>
-      <Seo title="Masuk — Teduh" noIndex />
+      <Seo title="Masuk — Ruang Teduh" noIndex />
       <div className="container page page--auth">
         <div className="auth-card">
           <p className="eyebrow">Akun pelanggan</p>
@@ -107,7 +107,7 @@ export function RegisterPage() {
 
   return (
     <>
-      <Seo title="Buat akun — Teduh" noIndex />
+      <Seo title="Buat akun — Ruang Teduh" noIndex />
       <div className="container page page--auth">
         <div className="auth-card">
           <p className="eyebrow">Akun pelanggan</p>
@@ -222,7 +222,7 @@ export function ForgotPasswordPage() {
 
   return (
     <>
-      <Seo title="Lupa kata sandi — Teduh" noIndex />
+      <Seo title="Lupa kata sandi — Ruang Teduh" noIndex />
       <div className="container page page--auth">
         <div className="auth-card">
           <p className="eyebrow">Pemulihan akun</p>
@@ -295,7 +295,7 @@ export function ResetPasswordPage() {
 
   return (
     <>
-      <Seo title="Atur ulang kata sandi — Teduh" noIndex />
+      <Seo title="Atur ulang kata sandi — Ruang Teduh" noIndex />
       <div className="container page page--auth">
         <div className="auth-card">
           <p className="eyebrow">Pemulihan akun</p>
@@ -389,7 +389,7 @@ export function AdminLoginPage() {
 
   return (
     <>
-      <Seo title="Masuk admin — Teduh" noIndex />
+      <Seo title="Masuk admin — Ruang Teduh" noIndex />
       <div className="container page page--auth">
         <div className="auth-card">
           <p className="eyebrow">Akses terbatas</p>

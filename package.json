@@ -19,7 +19,8 @@
     "test:e2e": "playwright test",
     "lint": "eslint apps e2e playwright.config.ts",
     "typecheck": "npm run typecheck -w @teduh/api && npm run typecheck -w @teduh/web",
-    "reconcile:loop": "npm run reconcile -w @teduh/api -- --loop"
+    "reconcile:loop": "npm run reconcile -w @teduh/api -- --loop",
+    "catalog:upgrade": "npm run catalog:upgrade -w @teduh/api"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",

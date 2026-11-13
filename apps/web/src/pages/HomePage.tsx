@@ -1,251 +1,249 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Seo } from '../components/Seo';
-import { useStore } from '../context/StoreContext';
-import { api, formatRupiah } from '../lib/api';
-import type { ProductDetail } from '../lib/types';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Seo } from "../components/Seo";
+import { ProductCard } from "../components/ProductCard";
+import { ErrorState, LoadingState } from "../components/States";
+import { Icon } from "../components/Icon";
+import { api, apiErrorMessage, formatRupiah } from "../lib/api";
+import type { ProductListResponse, ProductSummary } from "../lib/types";
 
-const categories = [
-  {
-    value: 'kasur',
-    label: 'Kasur',
-    copy: 'Ukuran 90 × 200 cm hingga 180 × 200 cm. Ketebalan 15–25 cm.',
-    image: '/images/categories/kasur.svg',
-    alt: 'Kasur dengan seprai putih tulang di kamar berwarna hangat',
-  },
-  {
-    value: 'bantal',
-    label: 'Bantal',
-    copy: 'Isi serat poliester atau lateks. Tinggi 10–14 cm.',
-    image: '/images/categories/bantal.svg',
-    alt: 'Dua bantal di atas bangku kayu',
-  },
-  {
-    value: 'furnitur',
-    label: 'Furnitur',
-    copy: 'Kayu jati dan pinus. Dimensi lebar, kedalaman, dan tinggi tercantum.',
-    image: '/images/categories/furnitur.svg',
-    alt: 'Kursi kayu dan meja samping di ruang putih tulang',
-  },
-] as const;
-
+const groups = [
+  { label: "Semua", q: "" },
+  { label: "Sofa", q: "sofa" },
+  { label: "Kursi", q: "kursi" },
+  { label: "Meja", q: "meja" },
+  { label: "Tempat tidur", q: "tempat tidur" },
+  { label: "Dekorasi", q: "lampu|karpet|bantal" },
+];
 export function HomePage() {
-  const { store } = useStore();
-  const [featured, setFeatured] = useState<ProductDetail | null>(null);
-
+  const [products, setProducts] = useState<ProductSummary[] | null>(null);
+  const [group, setGroup] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [retry, setRetry] = useState(0);
   useEffect(() => {
-    if (!store?.featuredProductSlug) return;
-    let cancelled = false;
+    let active = true;
     api
-      .get<ProductDetail>(`/products/${store.featuredProductSlug}`)
-      .then((product) => {
-        if (!cancelled) setFeatured(product);
+      .get<ProductListResponse>("/products?perPage=24&sort=terbaru")
+      .then((data) => {
+        if (active) setProducts(data.items);
       })
-      .catch(() => undefined);
+      .catch((reason) => {
+        if (active) setError(apiErrorMessage(reason));
+      });
     return () => {
-      cancelled = true;
+      active = false;
     };
-  }, [store?.featuredProductSlug]);
-
-  const featuredVariant = featured?.variants[0];
-  const specs = featuredVariant
-    ? [
-        featuredVariant.attributes.material ? `Bahan ${featuredVariant.attributes.material}` : null,
-        featuredVariant.attributes.widthCm &&
-        featuredVariant.attributes.depthCm &&
-        featuredVariant.attributes.heightCm
-          ? `${featuredVariant.attributes.widthCm} × ${featuredVariant.attributes.depthCm} × ${featuredVariant.attributes.heightCm} cm`
-          : null,
-        featured?.variants.length && featured.variants.length > 1
-          ? `${featured.variants.length} pilihan finishing`
-          : null,
-      ].filter(Boolean)
-    : [];
-
+  }, [retry]);
+  const displayed = group
+    ? products
+        ?.filter((p) => new RegExp(group, "i").test(`${p.name} ${p.summary}`))
+        .slice(0, 6)
+    : products?.slice(3, 9);
+  const tags = [
+    "cozynest-sofa",
+    "veroliving-coffee-table",
+    "serenity-lounge-chair",
+  ].map((slug) => products?.find((p) => p.slug === slug));
   return (
     <>
       <Seo
-        title={`${store?.brand.name ?? 'Teduh'} — Kasur, bantal, dan furnitur`}
-        description={
-          store?.brand.description ??
-          'Kasur, bantal, dan furnitur dengan dimensi dalam sentimeter, bahan yang tercantum, dan ketersediaan per varian.'
-        }
+        title="Ruang Teduh — Furnitur modern untuk hidup yang lebih nyaman"
+        description="Temukan sofa, kursi, meja, dan detail hangat untuk rumahmu. Jelajahi koleksi Ruang Teduh Indonesia."
         canonicalPath="/"
       />
-      <section className="hero">
-        <div className="container hero__grid">
-          <div className="hero__copy">
-            <p className="eyebrow">Kasur · Bantal · Furnitur</p>
-            <h1>
-              Ukuran yang pas,
-              <br />
-              bahan yang <em>jelas.</em>
-            </h1>
-            <p className="hero__lead">
-              Setiap varian mencantumkan dimensi dalam sentimeter, bahan, dan ketersediaan.
-              Ongkir dihitung dari kode pos dan kelas kirim di checkout.
-            </p>
-            <div className="hero__actions">
-              <Link to="/katalog" className="btn">
-                Jelajahi katalog
+      <section className="collection-hero container">
+        <p className="eyebrow">Ruang yang hangat. Hidup yang dekat.</p>
+        <h1>
+          Furnitur modern.
+          <br />
+          Ruang penuh cerita.
+        </h1>
+        <Link to="/katalog" className="btn">
+          Jelajahi koleksi <Icon name="arrow" size={18} />
+        </Link>
+        <div className="collection-hero__image">
+          <img
+            src="/images/collection/hero.jpg"
+            alt="Ruang keluarga hangat dengan sofa krem, meja kayu, dan cahaya alami"
+            width="1400"
+            height="700"
+            fetchPriority="high"
+          />
+          <span className="image-caption">A little more room for living.</span>
+          {tags.map((p, i) =>
+            p ? (
+              <Link
+                key={p.id}
+                className={`room-tag room-tag--${i}`}
+                to={`/produk/${p.slug}`}
+              >
+                <span className="room-tag__dot">+</span>
+                <span>
+                  {p.name}
+                  <strong>{formatRupiah(p.minPrice)}</strong>
+                </span>
               </Link>
-              <Link to="/katalog?category=kasur" className="link-arrow">
-                Lihat pilihan kasur <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-            <dl className="hero__facts">
-              <div>
-                <dt>Dimensi</dt>
-                <dd>sentimeter</dd>
-              </div>
-              <div>
-                <dt>Harga</dt>
-                <dd>Rupiah tanpa pecahan</dd>
-              </div>
-              <div>
-                <dt>Stok</dt>
-                <dd>terlihat per SKU</dd>
-              </div>
-            </dl>
-          </div>
-          <figure className="hero__visual">
-            <img
-              src="/images/home/hero-interior.svg"
-              alt="Ilustrasi ruang keluarga putih tulang dengan sofa krem, dinding zaitun, meja samping, dan tanaman"
-              width={1200}
-              height={900}
-              fetchPriority="high"
-            />
-            <figcaption>
-              Sofa linen dua dudukan, 160 × 85 × 78 cm. Ilustrasi aset demo.
-            </figcaption>
-          </figure>
+            ) : null,
+          )}
         </div>
       </section>
-
-      <section className="section" aria-labelledby="pintu-masuk">
-        <div className="container">
-          <div className="section-heading">
-            <p className="eyebrow">Mulai dari kebutuhan</p>
-            <h2 id="pintu-masuk">Tiga cara menemukan produk yang tepat.</h2>
+      <section className="section container" id="koleksi-baru">
+        <div className="collection-heading">
+          <div>
+            <p className="eyebrow">Pilihan terbaru</p>
+            <h2>
+              Kenalan dengan
+              <br />
+              favorit barumu.
+            </h2>
           </div>
-          <div className="door-grid">
-            {categories.map((category, index) => (
-              <Link
-                key={category.value}
-                to={`/katalog?category=${category.value}`}
-                className={`door door--${category.value}`}
+          <p>
+            Bentuk yang sederhana, material yang hangat. Furnitur pilihan untuk
+            menemani momen kecil di rumah.
+          </p>
+          <Link
+            to="/katalog?sort=terbaru"
+            className="round-link"
+            aria-label="Lihat semua produk terbaru"
+          >
+            <Icon name="arrow" />
+          </Link>
+        </div>
+        {error ? (
+          <ErrorState
+            message={error}
+            onRetry={() => {
+              setError(null);
+              setRetry((v) => v + 1);
+            }}
+          />
+        ) : products ? (
+          <div className="product-grid product-grid--three arrival-grid">
+            {products.slice(0, 3).map((p) => (
+              <ProductCard product={p} key={p.id} />
+            ))}
+          </div>
+        ) : (
+          <LoadingState label="Memuat koleksi" />
+        )}
+      </section>
+      <section
+        className="section container collection-all"
+        aria-labelledby="all-products"
+      >
+        <div className="collection-heading">
+          <div>
+            <p className="eyebrow">Temukan yang terasa pas</p>
+            <h2 id="all-products">Untuk setiap sudut.</h2>
+          </div>
+          <div className="collection-tabs" aria-label="Jenis furnitur">
+            {groups.map((g) => (
+              <button
+                key={g.label}
+                className={group === g.q ? "is-active" : ""}
+                onClick={() => setGroup(g.q)}
+                aria-pressed={group === g.q}
               >
-                <div className="door__media">
-                  <img src={category.image} alt={category.alt} width={800} height={600} loading="lazy" />
-                  <span className="door__number" aria-hidden="true">
-                    0{index + 1}
-                  </span>
-                </div>
-                <div className="door__body">
-                  <h3>{category.label}</h3>
-                  <p>{category.copy}</p>
-                  <span className="link-arrow">
-                    Lihat {category.label.toLowerCase()} <span aria-hidden="true">→</span>
-                  </span>
-                </div>
-              </Link>
+                {g.label}
+              </button>
             ))}
           </div>
         </div>
-      </section>
-
-      <section className="service-strip" aria-label="Informasi layanan toko">
-        <div className="container service-strip__grid">
-          <p>
-            <strong>Dimensi jelas.</strong> Lebar, kedalaman, dan tinggi tercantum dalam sentimeter.
-          </p>
-          <p>
-            <strong>Ongkir dihitung server.</strong> Tarif mengikuti zona, kode pos, dan kelas kirim.
-          </p>
-          <p>
-            <strong>Stok per SKU.</strong> Jumlah yang dapat dibeli diperiksa ulang saat checkout.
-          </p>
+        <div className="product-grid product-grid--three">
+          {displayed?.map((p) => (
+            <ProductCard key={p.id} product={p} />
+          ))}
+        </div>
+        {displayed?.length === 0 ? (
+          <p className="state-block">Belum ada produk dalam pilihan ini.</p>
+        ) : null}
+        <div className="section__cta">
+          <Link to="/katalog" className="btn btn--secondary">
+            Lihat semua koleksi <Icon name="arrow" size={18} />
+          </Link>
         </div>
       </section>
-
-      {featured ? (
-        <section className="feature" aria-labelledby="sorotan-koleksi">
-          <div className="container feature__grid">
-            <figure className="feature__media">
-              <img
-                src={featured.images[1]?.url ?? featured.images[0]?.url}
-                alt={featured.images[1]?.alt ?? featured.images[0]?.alt ?? featured.name}
-                width={800}
-                height={600}
-                loading="lazy"
-              />
-              <figcaption>Ilustrasi {featured.name.toLowerCase()}, aset demo.</figcaption>
-            </figure>
-            <div className="feature__copy">
-              <p className="eyebrow">Sorotan koleksi</p>
-              <h2 id="sorotan-koleksi">{featured.name}</h2>
-              <p className="feature__summary">{featured.summary}</p>
-              <ul className="spec-list">
-                {specs.map((spec) => (
-                  <li key={String(spec)}>{spec}</li>
-                ))}
-              </ul>
-              <p className="feature__price">
-                Mulai <strong>{formatRupiah(featured.minPrice)}</strong>
-              </p>
-              <div className="feature__actions">
-                <Link to={`/produk/${featured.slug}`} className="btn btn--light">
-                  Lihat sofa
-                </Link>
-                <Link to="/katalog?category=furnitur" className="link-arrow link-arrow--light">
-                  Semua furnitur <span aria-hidden="true">→</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-      ) : null}
-
-      <section className="section section--steps" aria-labelledby="cara-membeli">
-        <div className="container">
-          <div className="section-heading section-heading--split">
+      <section className="story-section container" id="tentang">
+        <div className="story-section__copy">
+          <p className="eyebrow">Tentang Ruang Teduh</p>
+          <h2>
+            Gaya bertemu
+            <br />
+            rasa nyaman.
+          </h2>
+          <p>
+            Kami percaya rumah bukan sekadar tempat. Ia adalah ruang untuk
+            berhenti sejenak, berkumpul, dan menjadi diri sendiri.
+          </p>
+          <p>
+            Koleksi bernuansa alami dengan bentuk modern, dipilih untuk
+            keseharian di rumah Indonesia.
+          </p>
+          <div className="story-facts">
             <div>
-              <p className="eyebrow">Alur pembelian</p>
-              <h2 id="cara-membeli">Tiga langkah sebelum bayar.</h2>
+              <strong>Detail jelas</strong>
+              <span>Bahan, dimensi, dan pilihan varian</span>
             </div>
-            <p className="muted section-heading__aside">
-              Total akhir selalu dihitung ulang oleh server sebelum transaksi dibuat.
-            </p>
+            <div>
+              <strong>Lebih tenang</strong>
+              <span>Biaya dan status pesanan transparan</span>
+            </div>
           </div>
-          <ol className="steps">
-            <li>
-              <span className="steps__number">01</span>
-              <div>
-                <h3>Pilih ukuran</h3>
-                <p>Foto, SKU, harga, dan stok mengikuti varian yang dipilih.</p>
-              </div>
-            </li>
-            <li>
-              <span className="steps__number">02</span>
-              <div>
-                <h3>Cek ongkir</h3>
-                <p>Masukkan kota dan kode pos. Tarif per kelas kirim ditampilkan sebelum bayar.</p>
-              </div>
-            </li>
-            <li>
-              <span className="steps__number">03</span>
-              <div>
-                <h3>Bayar sekarang</h3>
-                <p>Kamu diarahkan ke halaman pembayaran setelah ringkasan dikonfirmasi.</p>
-              </div>
-            </li>
-          </ol>
-          <div className="section__cta">
-            <Link to="/katalog" className="btn">
-              Mulai dari katalog
-            </Link>
-          </div>
+          <Link to="/jurnal" className="link-arrow">
+            Cerita & inspirasi ruang <Icon name="arrow" size={18} />
+          </Link>
+        </div>
+        <img
+          src="/images/collection/style-comfort.jpg"
+          alt="Kursi aksen kuning di sudut ruangan dengan lampu dan tanaman"
+          width="700"
+          height="850"
+          loading="lazy"
+        />
+      </section>
+      <section className="combo-section container">
+        <img
+          src="/images/collection/curated-combo.jpg"
+          alt="Pilihan furnitur kayu dan kursi untuk melengkapi ruang keluarga"
+          width="1400"
+          height="600"
+          loading="lazy"
+        />
+        <div>
+          <p className="eyebrow">Lebih serasi, lebih berarti</p>
+          <h2>
+            Satu ruang.
+            <br />
+            Banyak cerita.
+          </h2>
+          <p>
+            Padukan Serenity dan Veroliving
+            <br />
+            untuk sudut favorit yang baru.
+          </p>
+          <Link to="/katalog?q=walnut" className="btn">
+            Temukan paduannya <Icon name="arrow" size={18} />
+          </Link>
+        </div>
+      </section>
+      <section
+        className="collection-promises container"
+        aria-label="Belanja di Ruang Teduh"
+      >
+        <div>
+          <Icon name="box" />
+          <strong>Pilih dengan yakin</strong>
+          <p>Dimensi dan material di setiap produk.</p>
+        </div>
+        <div>
+          <Icon name="truck" />
+          <strong>Ongkir sebelum bayar</strong>
+          <p>Tarif sesuai alamat tujuan di Indonesia.</p>
+        </div>
+        <div>
+          <Icon name="chat" />
+          <strong>Tetap terhubung</strong>
+          <p>Pantau pesanan dan hubungi tim melalui akun.</p>
         </div>
       </section>
     </>

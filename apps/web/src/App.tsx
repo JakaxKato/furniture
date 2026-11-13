@@ -19,6 +19,7 @@ import { CartPage } from './pages/CartPage';
 import { CatalogPage } from './pages/CatalogPage';
 import { CheckoutPage } from './pages/CheckoutPage';
 import { HomePage } from './pages/HomePage';
+import { JournalPage } from './pages/JournalPage';
 import { ProductPage } from './pages/ProductPage';
 import { HelpPage, NotFoundPage, SimulationPaymentPage } from './pages/StorePages';
 
@@ -33,6 +34,7 @@ export function App() {
                 <Route element={<Layout />}>
                   <Route index element={<HomePage />} />
                   <Route path="katalog" element={<CatalogPage />} />
+                  <Route path="jurnal" element={<JournalPage />} />
                   <Route path="produk/:slug" element={<ProductPage />} />
                   <Route path="keranjang" element={<CartPage />} />
                   <Route path="checkout" element={<CheckoutPage />} />

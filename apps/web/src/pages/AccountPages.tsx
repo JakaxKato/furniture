@@ -71,7 +71,7 @@ export function AccountPage() {
 
   return (
     <>
-      <Seo title="Akun — Teduh" noIndex />
+      <Seo title="Akun — Ruang Teduh" noIndex />
       <div className="container page">
         <header className="page-head page-head--split">
           <div>
@@ -250,7 +250,7 @@ export function OrderDetailPage() {
 
   return (
     <>
-      <Seo title={`Pesanan ${order.orderNumber} — Teduh`} noIndex />
+      <Seo title={`Pesanan ${order.orderNumber} — Ruang Teduh`} noIndex />
       <div className="container page">
         <nav className="breadcrumb" aria-label="Breadcrumb">
           <Link to="/akun">Akun</Link>
@@ -279,8 +279,10 @@ export function OrderDetailPage() {
           </button>
         </header>
 
+        {fromPayment && order.paymentStatus === 'paid' ? <div className="order-thanks"><span aria-hidden="true">✓</span><p className="eyebrow">Pembayaran terkonfirmasi</p><h2>Terima kasih. Ruang barumu segera hadir.</h2><p>Pantau persiapan dan pengiriman di halaman ini. Ringkasan transaksi dapat dicetak kapan saja.</p></div> : null}
         <section className="panel order-progress" aria-label="Perkembangan pesanan">
           <h2>{order.shippingHold.active ? 'Tim kami sedang menangani pesanan Anda' : order.shippingStatus === 'delivered' ? 'Pesanan telah diterima' : order.shippingStatus === 'shipped' ? 'Pesanan dalam pengiriman' : order.shippingStatus === 'ready' ? 'Pesanan siap diserahkan ke kurir' : order.paymentStatus === 'paid' ? 'Pembayaran diterima, pesanan sedang disiapkan' : ['failed', 'expired', 'cancelled'].includes(order.paymentStatus) ? 'Pembayaran ditutup' : ['refunded', 'partially_refunded'].includes(order.paymentStatus) ? 'Pengembalian dana tercatat' : ['review', 'verifying', 'disputed'].includes(order.paymentStatus) ? 'Tim kami sedang memeriksa pembayaran' : 'Selesaikan pembayaran untuk melanjutkan'}</h2>
+          {order.paymentStatus === 'paid' && !order.shippingHold.active ? <ol className="fulfillment-steps" aria-label="Tahapan pengiriman">{['Pesanan diterima', 'Sedang disiapkan', 'Dalam pengiriman', 'Telah diterima'].map((label, i) => <li key={label} className={i <= (order.shippingStatus === 'delivered' ? 3 : order.shippingStatus === 'shipped' ? 2 : 1) ? 'is-active' : ''}><span>{String(i + 1).padStart(2, '0')}</span>{label}</li>)}</ol> : null}
           {order.customerUpdate && <p className="preserve-lines">{order.customerUpdate}</p>}
           {order.expectedDelivery && <p>Estimasi tiba: <strong>{formatDate(order.expectedDelivery)}</strong>. Estimasi dapat diperbarui oleh tim pengiriman.</p>}
           <p className="muted">Pembaruan terakhir: {formatDate(order.updatedAt)} · Halaman diperbarui otomatis setiap 15 detik.</p>

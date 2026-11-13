@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Icon } from './Icon';
 import { formatRupiah } from '../lib/api';
 import type { ProductSummary } from '../lib/types';
 
@@ -25,6 +26,7 @@ export function ProductCard({ product, eager = false }: { product: ProductSummar
             <div className="product-card__placeholder" aria-hidden="true" />
           )}
           {!product.inStock ? <span className="badge badge--out">Stok habis</span> : null}
+          <span className="product-card__explore" aria-hidden="true"><Icon name="arrow" /></span>
         </div>
         <div className="product-card__body">
           <p className="product-card__category">{product.categoryLabel}</p>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { PurchaseSteps } from '../components/PurchaseSteps';
 import { Seo } from '../components/Seo';
 import { useAuth } from '../context/AuthContext';
 import { useStore } from '../context/StoreContext';
@@ -36,7 +37,7 @@ export function SimulationPaymentPage() {
 
   if (authLoading || loading) {
     return (
-      <div className="container page page--narrow">
+      <div className="container page page--narrow"><PurchaseSteps stage={3} />
         <p role="status">Memuat halaman simulasi pembayaran…</p>
       </div>
     );
@@ -44,7 +45,7 @@ export function SimulationPaymentPage() {
 
   if (!user) {
     return (
-      <div className="container page page--narrow">
+      <div className="container page page--narrow"><PurchaseSteps stage={3} />
         <h1>Masuk untuk melanjutkan pembayaran.</h1>
         <Link
           to={`/masuk?next=${encodeURIComponent(`/pembayaran-simulasi/${gatewayOrderId ?? ''}`)}`}
@@ -58,7 +59,7 @@ export function SimulationPaymentPage() {
 
   if (error || !data) {
     return (
-      <div className="container page page--narrow">
+      <div className="container page page--narrow"><PurchaseSteps stage={3} />
         <h1>Simulasi pembayaran tidak tersedia</h1>
         <p>{error ?? 'Transaksi simulasi tidak ditemukan.'}</p>
         <Link to="/akun" className="btn btn--secondary">
@@ -84,8 +85,8 @@ export function SimulationPaymentPage() {
 
   return (
     <>
-      <Seo title="Simulasi pembayaran — Teduh" noIndex />
-      <div className="container page page--narrow">
+      <Seo title="Simulasi pembayaran — Ruang Teduh" noIndex />
+      <div className="container page page--narrow"><PurchaseSteps stage={3} />
         <div className="alert alert--info" role="note">
           Lingkungan simulasi pengembangan. Tidak ada uang yang diproses dan tidak ada data kartu
           yang diminta.
@@ -187,7 +188,7 @@ export function HelpPage() {
   return (
     <>
       <Seo
-        title="Bantuan dan kebijakan — Teduh"
+        title="Bantuan dan kebijakan — Ruang Teduh"
         description="Kontak resmi, area layanan, dan kebijakan pengiriman yang telah dikonfirmasi."
       />
       <div className="container page page--narrow">
@@ -268,7 +269,7 @@ export function HelpPage() {
 export function NotFoundPage() {
   return (
     <>
-      <Seo title="Halaman tidak ditemukan — Teduh" noIndex />
+      <Seo title="Halaman tidak ditemukan — Ruang Teduh" noIndex />
       <div className="container page page--narrow">
         <p className="eyebrow">404</p>
         <h1>Halaman tidak ditemukan.</h1>

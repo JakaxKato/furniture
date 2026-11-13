@@ -370,7 +370,7 @@ export function RestockPage() {
   const { data, error, refresh } = useResource<Paged<Stock>>(`/admin/restock?page=${page}`);
   return (
     <>
-      <Seo title="Perencanaan stok — Teduh" noIndex />
+      <Seo title="Perencanaan stok — Ruang Teduh" noIndex />
       <p className="eyebrow">Inventaris</p>
       <h1>Perencanaan stok</h1>
       <p className="muted">

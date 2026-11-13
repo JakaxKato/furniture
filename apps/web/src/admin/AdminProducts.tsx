@@ -106,7 +106,7 @@ export function AdminProductsPage() {
 
   return (
     <>
-      <Seo title="Produk admin — Teduh" noIndex />
+      <Seo title="Produk admin — Ruang Teduh" noIndex />
       <AdminPageHead
         eyebrow="Katalog"
         title="Produk dan varian"
@@ -423,7 +423,7 @@ export function AdminProductEditPage() {
 
   return (
     <>
-      <Seo title="Editor produk — Teduh" noIndex />
+      <Seo title="Editor produk — Ruang Teduh" noIndex />
       <AdminPageHead
         eyebrow="Katalog"
         title={isNew ? 'Produk baru' : product?.name ?? 'Editor produk'}

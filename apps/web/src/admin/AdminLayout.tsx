@@ -2,6 +2,7 @@ import { Link, NavLink, Navigate, Outlet, useLocation, useNavigate } from 'react
 import type { ReactNode } from 'react';
 import { isAdmin, useAuth } from '../context/AuthContext';
 import type { User } from '../lib/types';
+import { Icon, type IconName } from '../components/Icon';
 
 export const ROLE_LABELS: Record<User['role'], string> = {
   customer: 'Pelanggan',
@@ -58,6 +59,8 @@ export function AdminLayout() {
     { to: '/admin/kasus', label: 'Kasus', show: canManage(user, 'cases') },
     { to: '/admin/audit', label: 'Audit', show: user.role === 'super_admin' },
   ];
+  const icons: IconName[] = ['grid', 'box', 'box', 'clock', 'chat', 'truck', 'bag', 'shield', 'receipt'];
+  const activeLabel = [...links].reverse().find((link) => location.pathname === link.to || location.pathname.startsWith(link.to + '/'))?.label ?? 'Ringkasan';
 
   return (
     <div className="admin-shell">
@@ -66,14 +69,15 @@ export function AdminLayout() {
       </a>
       <aside className="admin-sidebar">
         <Link to="/admin" className="admin-brand">
-          <span>Teduh</span>
-          <small>Panel admin</small>
+          <span>ruang teduh.</span>
+          <small>Workspace · Indonesia</small>
         </Link>
         <nav aria-label="Navigasi admin">
           {links
             .filter((link) => link.show)
             .map((link) => (
               <NavLink key={link.to} to={link.to} end={link.to === '/admin'}>
+                <Icon name={icons[links.indexOf(link)] ?? 'grid'} size={18} />
                 {link.label}
               </NavLink>
             ))}
@@ -96,6 +100,7 @@ export function AdminLayout() {
         </div>
       </aside>
       <main id="admin-konten" className="admin-main">
+        <div className="admin-topbar"><p>Workspace <span>/</span> <strong>{activeLabel}</strong></p><div><span className="admin-timezone">Waktu Indonesia Barat</span><Link to="/" className="btn btn--secondary btn--small">Lihat toko <Icon name="arrow" size={15} /></Link></div></div>
         <Outlet />
       </main>
     </div>

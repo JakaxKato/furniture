@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { QuantityStepper } from '../components/QuantityStepper';
+import { PurchaseSteps } from '../components/PurchaseSteps';
 import { Seo } from '../components/Seo';
 import { useCart } from '../context/CartContext';
 import { formatRupiah } from '../lib/api';
@@ -9,14 +10,14 @@ export function CartPage() {
 
   return (
     <>
-      <Seo title="Keranjang — Teduh" description="Periksa isi keranjang sebelum checkout." noIndex />
+      <Seo title="Keranjang — Ruang Teduh" description="Periksa isi keranjang sebelum checkout." noIndex />
       <div className="container page">
+        <PurchaseSteps stage={0} />
         <header className="page-head">
           <p className="eyebrow">Sebelum checkout</p>
           <h1>Keranjang</h1>
           <p className="page-head__lead">
-            Harga dan stok dikonfirmasi ulang di server saat kamu meminta ringkasan checkout.
-            Keranjang tidak menahan stok.
+            Satu langkah lebih dekat dengan ruang impianmu. Periksa pilihanmu sebelum melanjutkan.
           </p>
         </header>
 
@@ -24,10 +25,10 @@ export function CartPage() {
           <div className="state-block">
             <p className="eyebrow">Keranjang kosong</p>
             <h2>Belum ada produk yang dipilih.</h2>
-            <p>Mulai dari kategori kasur, bantal, atau furnitur.</p>
+            <p>Temukan sofa, kursi, dan detail yang membuat rumah terasa lebih hangat.</p>
             <div className="hero__actions">
-              <Link to="/katalog?category=kasur" className="btn">
-                Lihat kasur
+              <Link to="/katalog" className="btn">
+                Jelajahi koleksi
               </Link>
               <Link to="/katalog" className="link-arrow">
                 Semua produk <span aria-hidden="true">→</span>

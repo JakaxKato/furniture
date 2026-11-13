@@ -1,11 +1,11 @@
-# Teduh — operasional toko dan transparansi pesanan
+# Ruang Teduh — operasional toko dan transparansi pesanan
 
-Teduh adalah demo e-commerce furnitur dengan alur pembeli, operasional, dan keuangan yang terhubung. Gunakan database demo saat presentasi. Pembayaran memakai simulator; notifikasi berjalan di dalam aplikasi.
+Ruang Teduh adalah demo e-commerce furnitur dengan alur pembeli, operasional, dan keuangan yang terhubung. Gunakan database demo saat presentasi. Pembayaran memakai simulator; notifikasi berjalan di dalam aplikasi.
 
 ## Skenario demonstrasi (10–15 menit)
 
 1. Jalankan petunjuk instalasi di README, `npm run indexes`, lalu `npm run seed` pada database demo. Buka dua browser/profil untuk sesi pelanggan dan admin yang terpisah.
-2. Sebagai pelanggan demo, pilih ukuran kasur, tambah ke keranjang, isi alamat Jakarta Selatan, cek ongkir, lalu simulasikan pembayaran diterima.
+2. Sebagai pelanggan demo, pilih finishing Serenity Lounge Chair, tambah ke keranjang, isi alamat Jakarta Selatan, cek ongkir, lalu simulasikan pembayaran diterima.
 3. Buka detail pesanan: lihat status, riwayat, harga snapshot, batas reservasi, dan dokumen yang bisa dicetak/disimpan PDF melalui dialog cetak browser.
 4. Sebagai admin, buka pusat operasional. Pesanan lunas masuk antrean. Laporan menggunakan tanggal WIB; antrean mencakup pekerjaan aktif dari seluruh periode.
 5. Buka pesanan, pilih penanggung jawab dan target serah ke kurir, isi estimasi tiba, centang ambil barang → kemas → pemeriksaan, lalu kirim pembaruan untuk pembeli.

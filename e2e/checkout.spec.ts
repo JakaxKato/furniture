@@ -4,20 +4,22 @@ import { authenticator } from 'otplib';
 test.describe('alur pembelian pelanggan', () => {
   test('pembelian, persiapan admin, tiket bantuan, dan notifikasi pembeli', async ({ page, browser }) => {
     await page.setViewportSize({ width: 1440, height: 1000 });
-    await page.goto('/katalog?category=kasur');
+    await page.goto('/katalog?q=Serenity');
     await expect(page.getByRole('heading', { name: 'Katalog', level: 1 })).toBeVisible();
-    await expect(page.getByRole('status').filter({ hasText: '3 produk' })).toBeVisible();
+    await expect(page.getByRole('status').filter({ hasText: '1 produk' })).toBeVisible();
 
-    await page.getByRole('link', { name: /Kasur Busa Satu Lapis/ }).click();
-    await expect(page.getByRole('heading', { name: 'Kasur Busa Satu Lapis', level: 1 })).toBeVisible();
-    await page.getByRole('button', { name: '160 × 200 cm' }).click();
-    await expect(page.locator('.product-info__price')).toContainText('2.950.000');
+    await page.getByRole('link', { name: /Serenity Lounge Chair & Ottoman/ }).click();
+    await expect(page.getByRole('heading', { name: 'Serenity Lounge Chair & Ottoman', level: 1 })).toBeVisible();
+    await page.getByRole('button', { name: /^Walnut & karamel/ }).click();
+    await expect(page.locator('.product-info__price')).toContainText('7.290.000');
     await expect(page.locator('.stock-line')).toContainText('Tersedia');
 
     await page.getByRole('button', { name: 'Tambahkan ke keranjang' }).click();
     await expect(page.getByRole('status').filter({ hasText: /ditambahkan ke keranjang/ })).toBeVisible();
 
-    await page.locator('.header__cart').click();
+    await page.getByRole('button', { name: /Buka keranjang/ }).click();
+    await expect(page.getByRole('dialog', { name: /Keranjangmu/ })).toBeVisible();
+    await page.getByRole('dialog').getByRole('link', { name: 'Lihat keranjang', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Keranjang', level: 1 })).toBeVisible();
     await page.getByRole('link', { name: 'Lanjut ke checkout' }).click();
     await expect(page.getByRole('heading', { name: 'Masuk untuk melanjutkan.' })).toBeVisible();
@@ -36,10 +38,14 @@ test.describe('alur pembelian pelanggan', () => {
     await expect(page.getByLabel('Provinsi')).toHaveValue('DKI Jakarta');
     await page.getByRole('button', { name: 'Cek ongkir' }).click();
 
-    await expect(page.getByRole('heading', { name: 'Ringkasan dari server' })).toBeVisible();
-    await expect(page.getByText(/3\.100\.000/).first()).toBeVisible();
-    await expect(page.getByText(/Ongkir Kasur/)).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Tinjau pesanan/  })).toBeVisible();
+    await expect(page.getByText(/7\.565\.000/).first()).toBeVisible();
+    await expect(page.getByText(/Ongkir Furnitur/)).toBeVisible();
 
+    const checkoutImage = await page.locator('.checkout-summary__media img').boundingBox();
+    expect(checkoutImage!.height).toBeLessThan(80);
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await page.screenshot({ path: 'test-results/visual/checkout-1440.png', fullPage: true });
     await page.getByRole('button', { name: 'Bayar sekarang' }).click();
     await page.waitForURL(/\/pembayaran-simulasi\//);
     await expect(page.getByText('Pembayaran simulasi')).toBeVisible();
@@ -70,6 +76,10 @@ test.describe('alur pembelian pelanggan', () => {
     await expect(adminPage.getByRole('heading', { name: 'Antrean tindakan' })).toBeVisible();
     await expect(adminPage.getByRole('link', { name: orderNumber, exact: true })).toBeVisible();
     await adminPage.screenshot({ path: 'test-results/visual/admin-operations.png', fullPage: true });
+    await adminPage.setViewportSize({ width: 390, height: 844 });
+    expect(await adminPage.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+    await adminPage.screenshot({ path: 'test-results/visual/admin-390.png', fullPage: true });
+    await adminPage.setViewportSize({ width: 1280, height: 900 });
     await adminPage.getByRole('link', { name: orderNumber, exact: true }).click();
     await adminPage.getByLabel('Penanggung jawab', { exact: true }).selectOption({ label: 'Admin Demo' });
     await adminPage.getByLabel('Barang diambil sesuai SKU dan jumlah').check();
@@ -112,7 +122,7 @@ test.describe('katalog responsif dan aksesibilitas filter', () => {
     const filterButton = page.getByRole('button', { name: /^Filter/ });
     await expect(filterButton).toBeVisible();
     await filterButton.click();
-    const dialog = page.getByRole('dialog');
+    const dialog = page.getByRole('dialog', { name: /Filter/ });
     await expect(dialog).toBeVisible();
     await expect(dialog.getByLabel('Cari produk')).toBeFocused();
     await page.keyboard.press('Escape');

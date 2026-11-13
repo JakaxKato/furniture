@@ -86,7 +86,7 @@ export function AdminCasesPage() {
 
   return (
     <>
-      <Seo title="Kasus pembayaran — Teduh" noIndex />
+      <Seo title="Kasus pembayaran — Ruang Teduh" noIndex />
       <AdminPageHead
         eyebrow="Keuangan dan support"
         title="Kasus pembayaran"

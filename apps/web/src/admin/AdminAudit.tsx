@@ -46,7 +46,7 @@ export function AdminAuditPage() {
 
   return (
     <>
-      <Seo title="Audit log — Teduh" noIndex />
+      <Seo title="Audit log — Ruang Teduh" noIndex />
       <AdminPageHead
         eyebrow="Kepatuhan"
         title="Audit log"

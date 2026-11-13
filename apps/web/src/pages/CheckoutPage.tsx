@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, type ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Seo } from '../components/Seo';
+import { PurchaseSteps } from '../components/PurchaseSteps';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useStore, useToast } from '../context/StoreContext';
@@ -201,7 +202,7 @@ export function CheckoutPage() {
   if (!user) {
     return (
       <>
-        <Seo title="Checkout — Teduh" noIndex />
+        <Seo title="Checkout — Ruang Teduh" noIndex />
         <div className="container page page--narrow">
           <p className="eyebrow">Checkout</p>
           <h1>Masuk untuk melanjutkan.</h1>
@@ -241,8 +242,9 @@ export function CheckoutPage() {
 
   return (
     <>
-      <Seo title="Checkout — Teduh" description="Konfirmasi alamat, ongkir, dan total pesanan." noIndex />
+      <Seo title="Checkout — Ruang Teduh" description="Konfirmasi alamat, ongkir, dan total pesanan." noIndex />
       <div className="container page checkout-page">
+        <PurchaseSteps stage={quote ? 2 : 1} />
         <header className="page-head">
           <p className="eyebrow">Checkout</p>
           <h1>Konfirmasi pesanan</h1>
@@ -261,7 +263,7 @@ export function CheckoutPage() {
             }}
           >
             <section className="form-section" aria-labelledby="alamat-heading">
-              <h2 id="alamat-heading">Alamat pengiriman</h2>
+              <h2 id="alamat-heading"><span className="section-number">01</span> Alamat pengiriman</h2>
               <p className="muted">Satu alamat dan satu pengiriman untuk pesanan ini.</p>
               <div className="form-grid">
                 <Field id="recipient" label="Nama penerima" error={fieldErrors.recipient}>
@@ -363,7 +365,7 @@ export function CheckoutPage() {
             </section>
 
             <section className="form-section" aria-labelledby="ringkasan-heading">
-              <h2 id="ringkasan-heading">Ringkasan dari server</h2>
+              <h2 id="ringkasan-heading"><span className="section-number">02</span> Tinjau pesanan</h2>
               {quoteError ? (
                 <div className="alert alert--error" role="alert">
                   <p>{quoteError.message}</p>

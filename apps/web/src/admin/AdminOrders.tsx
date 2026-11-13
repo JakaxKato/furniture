@@ -77,7 +77,7 @@ export function AdminOrdersPage() {
 
   return (
     <>
-      <Seo title="Pesanan admin — Teduh" noIndex />
+      <Seo title="Pesanan admin — Ruang Teduh" noIndex />
       <AdminPageHead
         eyebrow="Operasional"
         title="Pesanan"

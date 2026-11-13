@@ -3,6 +3,7 @@ import { Link, Navigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { api, apiErrorMessage, formatDate } from '../lib/api';
 import { type Paged, type Ticket, ticketLabels, useResource, localInput, isoInput } from '../lib/experience';
+import { Icon } from '../components/Icon';
 import { Seo } from '../components/Seo';
 
 export function PageControls({
@@ -51,7 +52,7 @@ function TicketList({ admin }: { admin: boolean }) {
   const [message, setMessage] = useState('');
   return (
     <div className={admin ? '' : 'container page'}>
-      <Seo title="Layanan pesanan — Teduh" noIndex />
+      <Seo title="Layanan pesanan — Ruang Teduh" noIndex />
       <p className="eyebrow">{admin ? 'Layanan pelanggan' : 'Akun pelanggan'}</p>
       <h1>Bantuan, retur & refund</h1>
       <p className="muted">
@@ -208,7 +209,7 @@ function TicketCard({ ticket, admin, refresh }: { ticket: Ticket; admin: boolean
       <ol className="timeline">
         {ticket.messages.map((m) => (
           <li key={m._id}>
-            <strong>{m.author === 'staff' ? 'Tim Teduh' : m.name}</strong> · <small>{formatDate(m.at)}</small>
+            <strong>{m.author === 'staff' ? 'Tim Ruang Teduh' : m.name}</strong> · <small>{formatDate(m.at)}</small>
             <p className="preserve-lines">{m.body}</p>
             {m.evidenceUrl && (
               <a href={m.evidenceUrl} target="_blank" rel="noreferrer">
@@ -319,8 +320,8 @@ type Inbox = {
 export function InboxBadge() {
   const { data } = useResource<Inbox>('/inbox', 30000);
   return (
-    <Link className="header__action" to="/akun/notifikasi">
-      Notifikasi{data?.unread ? ` (${data.unread})` : ''}
+    <Link className="header-icon header-bag" to="/akun/notifikasi" aria-label={`Notifikasi${data?.unread ? ` (${data.unread} belum dibaca)` : ''}`}>
+      <Icon name="bell" />{data?.unread ? <span className="cart-count">{data.unread}</span> : null}
     </Link>
   );
 }
@@ -335,7 +336,7 @@ function InboxContent() {
   const [message, setMessage] = useState('');
   return (
     <div className="container page page--narrow">
-      <Seo title="Notifikasi — Teduh" noIndex />
+      <Seo title="Notifikasi — Ruang Teduh" noIndex />
       <h1>Notifikasi pesanan</h1>
       <p className="muted">50 pembaruan terbaru. Diperbarui otomatis selama halaman terbuka.</p>
       <button

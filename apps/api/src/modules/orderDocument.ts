@@ -11,7 +11,7 @@ export function orderDocument(order: InstanceType<typeof Order>, warehouse: bool
   const title = warehouse ? 'Daftar ambil & kemas' : 'Ringkasan transaksi';
   return `<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title} ${escape(order.orderNumber)}</title><style>
   body{font:16px/1.6 system-ui,sans-serif;color:#20251d;max-width:900px;margin:40px auto;padding:24px}table{width:100%;border-collapse:collapse}th,td{padding:12px;text-align:left;border-bottom:1px solid #ccc}small{color:#555}h1{font-size:28px}@media print{body{margin:0}.print-tip{display:none}}
-  </style></head><body><h1>Teduh · ${title}</h1><p>${escape(order.orderNumber)} · ${escape(order.createdAt.toLocaleDateString('id-ID', { timeZone: 'Asia/Jakarta' }))}</p>
+  </style></head><body><h1>Ruang Teduh · ${title}</h1><p>${escape(order.orderNumber)} · ${escape(order.createdAt.toLocaleDateString('id-ID', { timeZone: 'Asia/Jakarta' }))}</p>
   <p class="print-tip">Gunakan Cetak pada browser untuk mencetak atau menyimpan sebagai PDF.</p>
   <p>Status pembayaran: <strong>${escape(({ paid: 'Pembayaran diterima', refunded: 'Refund tercatat', partially_refunded: 'Refund sebagian tercatat', pending: 'Menunggu pembayaran' } as Record<string, string>)[order.paymentStatus] ?? 'Periksa status terbaru di akun')}</strong></p>
   <p>${escape(order.address.recipient)}<br>${escape(order.address.street)}<br>${escape(order.address.city)}, ${escape(order.address.province)} ${escape(order.address.postalCode)}<br>${escape(order.address.phone)}</p>

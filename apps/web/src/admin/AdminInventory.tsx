@@ -82,7 +82,7 @@ export function AdminInventoryPage() {
 
   return (
     <>
-      <Seo title="Inventaris admin — Teduh" noIndex />
+      <Seo title="Inventaris admin — Ruang Teduh" noIndex />
       <AdminPageHead
         eyebrow="Inventaris"
         title="Stok per SKU"

@@ -231,7 +231,7 @@ export async function getFacets(category?: Category) {
     width: [...bucket.width].sort((a, b) => a - b),
   });
   return {
-    categories: CATEGORIES.map((cat) => ({ value: cat, label: CATEGORY_LABELS[cat] })),
+    categories: CATEGORIES.filter((cat) => products.some((product) => product.category === cat)).map((cat) => ({ value: cat, label: CATEGORY_LABELS[cat] })),
     filters: Object.fromEntries(CATEGORIES.map((cat) => [cat, serialise(facets[cat]!)])),
     priceRange: Number.isFinite(minPrice) ? { min: minPrice, max: maxPrice } : null,
   };

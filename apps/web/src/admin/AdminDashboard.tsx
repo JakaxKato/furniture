@@ -5,6 +5,7 @@ import { Seo } from '../components/Seo';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../lib/api';
 import { OperationalDashboard } from './Operations';
+import { Icon } from '../components/Icon';
 
 type Summary = { paid: number; ready: number; openCases: number; lowStock: number; pendingPayments: number };
 
@@ -26,11 +27,11 @@ export function AdminDashboard() {
 
   return (
     <>
-      <Seo title="Panel admin — Teduh" noIndex />
+      <Seo title="Panel admin — Ruang Teduh" noIndex />
       <AdminPageHead
         eyebrow="Operasional"
         title="Pusat operasional"
-        lead="Angka diambil langsung dari basis data. Tindakan sensitif tercatat di audit log."
+        lead={`Selamat bekerja, ${user.name.split(' ')[0]}. Ini yang perlu perhatian tim hari ini.`}
       />
       {error ? <div className="alert alert--error">{error}</div> : null}
       {canRead ? (
@@ -72,6 +73,7 @@ function Stat({ label, value, href }: { label: string; value?: number; href: str
     <Link to={href} className="admin-stat">
       <span className="admin-stat__label">{label}</span>
       <span className="admin-stat__value">{value ?? '—'}</span>
+      <span className="admin-stat__action">Lihat detail <Icon name="arrow" size={16} /></span>
     </Link>
   );
 }

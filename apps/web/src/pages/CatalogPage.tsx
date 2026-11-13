@@ -168,8 +168,8 @@ export function CatalogPage() {
   return (
     <>
       <Seo
-        title="Katalog — Teduh"
-        description="Cari kasur, bantal, dan furnitur berdasarkan ukuran, bahan, harga, dan ketersediaan. Setiap produk memiliki dimensi sentimeter dan harga per varian."
+        title="Katalog — Ruang Teduh"
+        description="Temukan sofa, kursi, meja, dan dekorasi untuk rumahmu. Bandingkan bahan, ukuran, harga, dan ketersediaan."
         canonicalPath="/katalog"
       />
       <header className="catalog-hero">
@@ -177,9 +177,9 @@ export function CatalogPage() {
           <p className="eyebrow">Semua produk</p>
           <h1>Katalog</h1>
           <p className="catalog-hero__lead">
-            Kasur, bantal, dan furnitur dengan ukuran, bahan, serta ketersediaan per varian.
-            Pilih filter untuk mempersempit hasil.
+            Pilihan untuk ruang yang terasa lebih dekat. Temukan bentuk, material, dan ukuran yang pas untukmu.
           </p>
+          <div className="collection-tabs catalog-types" aria-label="Pilihan koleksi">{['Semua', 'Sofa', 'Kursi', 'Meja', 'Tempat tidur', 'Karpet'].map((label) => <button key={label} className={(filters.q ?? '') === (label === 'Semua' ? '' : label.toLowerCase()) ? 'is-active' : ''} onClick={() => patch({ q: label === 'Semua' ? undefined : label.toLowerCase(), category: undefined })}>{label}</button>)}</div>
         </div>
       </header>
 

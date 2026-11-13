@@ -51,15 +51,15 @@ export type StoreConfig = {
  */
 export const storeConfig: StoreConfig = {
   brand: {
-    name: 'Teduh',
-    legalName: 'Teduh Living (data demo)',
-    tagline: 'Kasur, bantal, dan furnitur dengan ukuran yang jelas.',
+    name: 'Ruang Teduh',
+    legalName: 'Ruang Teduh Indonesia (demo)',
+    tagline: 'Furnitur modern untuk ruang yang lebih berarti.',
     description:
-      'Katalog kasur, bantal, dan furnitur dengan dimensi dalam sentimeter, bahan yang tercantum, dan ketersediaan per varian.',
-    domain: 'teduh.example',
+      'Furnitur dengan bentuk sederhana, material hangat, dan detail yang menemani keseharian. Temukan ruang teduhmu, di rumah.',
+    domain: 'ruangteduh.example',
   },
   contact: {
-    email: 'halo@teduh.example',
+    email: 'halo@ruangteduh.example',
     whatsapp: '+62 812-0000-0000',
     hours: 'Senin–Jumat, 09.00–17.00 WIB (contoh)',
     address: 'Alamat gudang demo, Jakarta',
@@ -68,7 +68,7 @@ export const storeConfig: StoreConfig = {
   policies: {
     shipping: {
       title: 'Pengiriman',
-      body: 'Ongkir dihitung di server berdasarkan kode pos, zona aktif, dan kelas kirim setiap SKU. Estimasi hari hanya ditampilkan bila tarifnya sudah ditandai terkonfirmasi.',
+      body: 'Cek ongkir dan estimasi pengiriman sesuai kota serta kode pos sebelum membayar. Pantau persiapan barang dan resi melalui halaman pesanan.',
       confirmed: true,
     },
     returns: {
@@ -87,7 +87,7 @@ export const storeConfig: StoreConfig = {
       confirmed: false,
     },
   },
-  featuredProductSlug: 'sofa-dua-dudukan-linen',
+  featuredProductSlug: 'serenity-lounge-chair',
   demoNotice:
     'Situs demo. Produk, harga, tarif, dan kontak adalah contoh dan bukan penawaran aktif.',
 };

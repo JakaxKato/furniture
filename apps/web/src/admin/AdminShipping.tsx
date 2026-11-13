@@ -57,7 +57,7 @@ export function AdminShippingPage() {
 
   return (
     <>
-      <Seo title="Zona dan tarif — Teduh" noIndex />
+      <Seo title="Zona dan tarif — Ruang Teduh" noIndex />
       <AdminPageHead
         eyebrow="Pengiriman"
         title="Zona dan tarif"

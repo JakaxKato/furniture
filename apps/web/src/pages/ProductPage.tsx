@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ProductCard } from '../components/ProductCard';
+import { QuantityStepper } from '../components/QuantityStepper';
+import { Icon } from '../components/Icon';
 import { Seo } from '../components/Seo';
 import { ErrorState, LoadingState } from '../components/States';
 import { useCart } from '../context/CartContext';
@@ -25,6 +27,7 @@ export function ProductPage() {
   const [retry, setRetry] = useState(0);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [activeImage, setActiveImage] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [related, setRelated] = useState<ProductListResponse | null>(null);
   const { add } = useCart();
   const { notify } = useToast();
@@ -43,6 +46,7 @@ export function ProductPage() {
       .then((data) => {
         if (!cancelled) {
           setProduct(data);
+          setSelectedId(data.variants.find((variant) => variant.inStock)?.id ?? data.variants[0]?.id ?? null);
           track('view_product', { productId: data.id });
         }
       })
@@ -87,6 +91,7 @@ export function ProductPage() {
 
   useEffect(() => {
     setActiveImage(0);
+    setQuantity(1);
   }, [selectedId]);
 
   if (loading) {
@@ -165,16 +170,16 @@ export function ProductPage() {
         imageAlt: image?.alt ?? null,
         category: product.category,
       },
-      1,
+      quantity,
     );
     notify(`${product.name} — ${selected.label} ditambahkan ke keranjang.`);
-    track('add_to_cart', { productId: product.id, sku: selected.sku, quantity: 1 });
+    track('add_to_cart', { productId: product.id, sku: selected.sku, quantity });
   };
 
   return (
     <>
       <Seo
-        title={`${product.name} — Teduh`}
+        title={`${product.name} — Ruang Teduh`}
         description={product.summary}
         canonicalPath={`/produk/${product.slug}`}
       />
@@ -270,6 +275,7 @@ export function ProductPage() {
             </div>
 
             <div className="product-actions">
+              {selected?.inStock ? <QuantityStepper label={product.name} value={quantity} onChange={setQuantity} max={Math.min(99, selected.available)} /> : null}
               <button type="button" className="btn" onClick={addToCart} disabled={!canAdd}>
                 Tambahkan ke keranjang
               </button>
@@ -280,6 +286,7 @@ export function ProductPage() {
             <p className="product-info__note">
               Keranjang tidak menahan stok. Stok diperiksa ulang saat checkout.
             </p>
+            <div className="product-reassurance"><span><Icon name="truck" /> Ongkir sebelum bayar</span><span><Icon name="receipt" /> Rincian transparan</span><span><Icon name="chat" /> Bantuan dalam aplikasi</span></div>
 
             <div className="info-block">
               <h2>Detail produk</h2>
