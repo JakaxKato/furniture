@@ -1,5 +1,7 @@
 # Teduh — toko kasur, bantal, dan furnitur
 
+Panduan fitur operasional, skenario demo recruiter, keputusan teknis, dan batas integrasi: [Portofolio Teduh](docs/PORTFOLIO.md).
+
 MVP toko online Indonesia dengan **MongoDB + Mongoose, Express, React + Vite, dan TypeScript**. Storefront berbahasa Indonesia, harga Rupiah bilangan bulat, dimensi sentimeter, dan pembayaran Midtrans Snap dengan adapter simulasi untuk pengembangan/tes.
 
 > **Status: demo/pengembangan, belum siap produksi.** Identitas merek, kontak, produk, harga, stok, tarif, kanal pembayaran, dan kebijakan retur/garansi/privasi di repo ini adalah data contoh. Kebijakan yang belum disetujui tidak dirender ke publik. Lihat [Sebelum rilis](#sebelum-rilis).
@@ -272,10 +274,10 @@ npm run typecheck
 npm run build
 npm test                  # integrasi API, MongoDB replica set in-memory
 npx playwright install chromium
-npm run test:e2e          # browser; menjalankan API memory + Vite
+npm run test:e2e          # browser; build web + API dengan database sementara
 ```
 
-`npm test` memakai `mongodb-memory-server` (unduhan MongoDB pertama kali) dan **bukan** Docker. Tes browser menggunakan adapter simulasi; server E2E membuat database baru, seed demo, lalu berhenti. Hentikan `npm run dev` sebelum `npm run test:e2e` karena Playwright memakai port 4100/5173 dan tidak akan memakai server dev yang sudah berjalan. Pipeline CI di `.github/workflows/ci.yml` menjalankan lint, typecheck, build, tes integrasi replica set, dan tes browser.
+`npm test` memakai `mongodb-memory-server` (unduhan MongoDB pertama kali) dan **bukan** Docker. Tes browser membuat build web, memakai adapter simulasi dan database sementara, lalu berhenti. Kosongkan port 4100 sebelum menjalankan E2E. Frontend dan API disajikan dari origin yang sama, tanpa Vite dev server. Pipeline CI di `.github/workflows/ci.yml` menjalankan lint, typecheck, build, tes integrasi replica set, dan tes browser pada Node 22.
 
 ### Hasil terakhir di workspace ini
 
@@ -285,7 +287,7 @@ npm run test:e2e          # browser; menjalankan API memory + Vite
 | `npm run typecheck` | Lulus (API + web) |
 | `npm run build` | Lulus (API + web) |
 | `npm audit` | 0 vulnerabilities |
-| `npm test` | **44 tes / 6 file lulus** |
+| `npm test` | **51 tes / 7 file lulus** |
 | `npm run test:e2e` | **6 tes browser lulus** |
 | Visual 1440 px | Beranda, katalog, produk diperiksa |
 | Visual 390 px | Beranda dan katalog diperiksa |
@@ -314,7 +316,7 @@ Keputusan yang masih perlu diselesaikan pemilik bisnis/operasional:
 | Operasional | Pemilik kasus, target respons, backup/restore, alert, runbook insiden |
 | Kualitas | UAT operator, uji merchant sandbox, uji beban, audit WCAG 2.2 AA menyeluruh |
 
-Belum diimplementasikan (di luar scope MVP ini): checkout tamu, wishlist, ulasan, promo, integrasi kurir/tarif live, multi-gudang, pre-order, retur mandiri, refund otomatis dari panel, dan unggah foto admin (gambar memakai URL).
+Belum diimplementasikan: checkout tamu, wishlist, ulasan, promo, integrasi kurir/tarif live, multi-gudang, pre-order, penjemputan barang retur, refund otomatis dari panel, dan unggah foto admin. Pengajuan retur/refund melalui tiket sudah tersedia; persetujuan tidak otomatis mengubah dana atau stok. Lihat [panduan portofolio](docs/PORTFOLIO.md) untuk rincian.
 
 ## Troubleshooting
 
@@ -326,7 +328,7 @@ Belum diimplementasikan (di luar scope MVP ini): checkout tamu, wishlist, ulasan
 - **CSRF/Origin 403** — pastikan `APP_ORIGIN` sama dengan origin browser dan cookie `teduh_csrf` ada; jangan memanggil API langsung dari port berbeda tanpa `ALLOWED_ORIGINS`.
 - **Tidak ada email reset** — mode `file` menulis ke `apps/api/var/mail`; mode `memory` untuk tes. Penyedia email belum diintegrasikan.
 - **Playwright tidak menemukan browser** — `npx playwright install chromium`.
-- **Server E2E port bentrok** — hentikan API port 4100/Vite 5173 sebelum `npm run test:e2e`; Playwright tidak memakai server dev yang sedang berjalan. Seed ulang database demo bila stok contoh sudah habis.
+- **Server E2E port bentrok** — kosongkan port 4100 sebelum `npm run test:e2e`; Playwright tidak memakai server yang sudah berjalan. Gunakan Node 22 untuk menyamakan runtime dengan CI.
 
 ## Aset dan lisensi
 

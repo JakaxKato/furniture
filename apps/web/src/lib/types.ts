@@ -187,6 +187,10 @@ export type OrderListResponse = {
 };
 
 export type OrderDetail = {
+  updatedAt: string;
+  customerUpdate: string | null;
+  expectedDelivery: string | null;
+  trackingUrl: string | null;
   orderNumber: string;
   createdAt: string;
   email: string;

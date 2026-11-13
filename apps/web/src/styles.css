@@ -351,6 +351,13 @@ ol {
 .field input,
 .field select,
 .field textarea,
+.form-stack > label > input,
+.form-stack > label > select,
+.form-stack > label > textarea,
+.experience-fields input,
+.experience-fields select,
+.experience-fieldset > label > input:not([type="checkbox"]),
+.experience-fieldset > label > textarea,
 .filters input,
 .filters select,
 .admin-search input,
@@ -2115,6 +2122,7 @@ ol {
 
 .order-items__media img {
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
@@ -3361,3 +3369,19 @@ details.admin-panel[open] .admin-details__summary {
     scroll-behavior: auto !important;
   }
 }
+/* Order operations and customer service */
+.experience-fields { display: flex; flex-wrap: wrap; align-items: end; gap: 1rem; margin: 1rem 0; }
+.experience-fields > label { flex: 1 1 190px; min-width: 0; }
+.experience-fields label, .service-ticket label, .experience-fieldset label { display: grid; gap: .5rem; }
+.experience-fieldset { border: 0; padding: 0; min-width: 0; display: grid; gap: 1rem; }
+.experience-fieldset .checkbox-row { display: flex; }
+.experience-metrics { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 1rem; margin: 1.5rem 0; }
+.experience-metrics > div { padding: 1rem; border: 1px solid #d8dcd2; border-radius: .5rem; }
+.experience-metrics dd { margin: .5rem 0 0; font-size: 1.3rem; font-weight: 600; overflow-wrap: anywhere; }
+.service-ticket, .inbox-item, .order-progress { margin: 1.5rem 0; overflow-wrap: anywhere; }
+.service-ticket .form-stack, details > .form-stack { margin-top: 1.5rem; }
+.preserve-lines { white-space: pre-wrap; }
+.inbox-item.is-unread { border-left: 4px solid #536444; }
+details > summary { cursor: pointer; padding: .5rem 0; }
+.account-actions { flex-wrap: wrap; gap: .75rem; }
+@media (max-width: 700px) { .experience-metrics { grid-template-columns: repeat(2,minmax(0,1fr)); } .experience-fields { align-items: stretch; } .header__actions { flex-wrap: wrap; } }

@@ -80,6 +80,8 @@ export function AccountPage() {
             <p className="page-head__lead">{user?.email}</p>
           </div>
           <div className="account-actions">
+            <Link to="/akun/notifikasi" className="btn btn--secondary btn--small">Notifikasi</Link>
+            <Link to="/akun/bantuan" className="btn btn--secondary btn--small">Bantuan & pengajuan</Link>
             {isAdmin(user) ? (
               <Link to="/admin" className="btn btn--secondary btn--small">
                 Panel admin
@@ -197,6 +199,8 @@ export function OrderDetailPage() {
   useEffect(() => {
     if (!user) return;
     void load();
+    const timer = window.setInterval(() => { if (!document.hidden) void load(); }, 15000);
+    return () => window.clearInterval(timer);
   }, [user, load]);
 
   if (authLoading || (user && pageLoading)) {
@@ -243,7 +247,6 @@ export function OrderDetailPage() {
 
   const contact = store?.contact;
   const showReview = order.paymentStatus === 'review';
-  const canRetryCheck = ['pending', 'verifying', 'review'].includes(order.paymentStatus);
 
   return (
     <>
@@ -270,16 +273,26 @@ export function OrderDetailPage() {
               setRefreshing(true);
               void load();
             }}
-            disabled={!canRetryCheck || refreshing}
+            disabled={refreshing}
           >
             {refreshing ? 'Memeriksa…' : 'Periksa status'}
           </button>
         </header>
 
+        <section className="panel order-progress" aria-label="Perkembangan pesanan">
+          <h2>{order.shippingHold.active ? 'Tim kami sedang menangani pesanan Anda' : order.shippingStatus === 'delivered' ? 'Pesanan telah diterima' : order.shippingStatus === 'shipped' ? 'Pesanan dalam pengiriman' : order.shippingStatus === 'ready' ? 'Pesanan siap diserahkan ke kurir' : order.paymentStatus === 'paid' ? 'Pembayaran diterima, pesanan sedang disiapkan' : ['failed', 'expired', 'cancelled'].includes(order.paymentStatus) ? 'Pembayaran ditutup' : ['refunded', 'partially_refunded'].includes(order.paymentStatus) ? 'Pengembalian dana tercatat' : ['review', 'verifying', 'disputed'].includes(order.paymentStatus) ? 'Tim kami sedang memeriksa pembayaran' : 'Selesaikan pembayaran untuk melanjutkan'}</h2>
+          {order.customerUpdate && <p className="preserve-lines">{order.customerUpdate}</p>}
+          {order.expectedDelivery && <p>Estimasi tiba: <strong>{formatDate(order.expectedDelivery)}</strong>. Estimasi dapat diperbarui oleh tim pengiriman.</p>}
+          <p className="muted">Pembaruan terakhir: {formatDate(order.updatedAt)} · Halaman diperbarui otomatis setiap 15 detik.</p>
+          <div className="account-actions">
+            {order.trackingUrl && <a className="btn btn--small" href={order.trackingUrl} target="_blank" rel="noreferrer">Lacak pengiriman</a>}
+            <a className="btn btn--secondary btn--small" href={`/api/v1/experience/orders/${order.orderNumber}/document`} target="_blank" rel="noreferrer">Cetak / simpan ringkasan PDF</a>
+            <Link className="btn btn--secondary btn--small" to={`/akun/bantuan?order=${encodeURIComponent(order.orderNumber)}`}>Bantuan / retur / refund</Link>
+          </div>
+        </section>
         {fromPayment || checking ? (
           <div className="alert alert--info" role="status">
-            Status di halaman ini dibaca dari backend. Browser tidak menetapkan pembayaran sebagai
-            lunas.
+            Status pembayaran diperbarui otomatis. Anda tidak perlu membayar ulang saat verifikasi berlangsung.
           </div>
         ) : null}
 

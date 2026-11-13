@@ -20,6 +20,7 @@ export function canManage(user: User, permission: string): boolean {
     orders: ['admin_ops', 'admin_finance'],
     fulfill: ['admin_ops'],
     cases: ['admin_finance'],
+    support: ['admin_ops', 'admin_finance'],
     audit: [],
   };
   return (map[permission] ?? []).includes(user.role);
@@ -50,6 +51,8 @@ export function AdminLayout() {
     { to: '/admin', label: 'Ringkasan', show: true },
     { to: '/admin/produk', label: 'Produk', show: canManage(user, 'catalog') },
     { to: '/admin/inventaris', label: 'Inventaris', show: canManage(user, 'inventory') },
+    { to: '/admin/stok', label: 'Rencana stok', show: canManage(user, 'inventory') },
+    { to: '/admin/layanan', label: 'Layanan pelanggan', show: canManage(user, 'support') },
     { to: '/admin/pengiriman', label: 'Zona & tarif', show: canManage(user, 'shipping') },
     { to: '/admin/pesanan', label: 'Pesanan', show: canManage(user, 'orders') },
     { to: '/admin/kasus', label: 'Kasus', show: canManage(user, 'cases') },

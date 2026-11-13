@@ -14,8 +14,8 @@ async function main(): Promise<void> {
   process.env.MONGODB_URI = uri;
   process.env.MONGODB_DB = 'teduh_e2e';
   process.env.PORT = '4100';
-  process.env.APP_ORIGIN = 'http://localhost:5173';
-  process.env.SITE_URL = 'http://localhost:5173';
+  process.env.APP_ORIGIN = 'http://localhost:4100';
+  process.env.SITE_URL = 'http://localhost:4100';
   process.env.COOKIE_SECURE = 'false';
   process.env.PAYMENT_ADAPTER = 'simulation';
   process.env.RATE_LIMIT_DISABLED = 'true';
@@ -28,6 +28,8 @@ async function main(): Promise<void> {
   const { connectDb, disconnectDb } = await import('../db');
   const { seedDemoData } = await import('../seed/demo');
   const { createApp } = await import('../app');
+  const { logger } = await import('../lib/logger');
+  logger.level = 'error';
   const { SimulationGateway } = await import('../modules/paymentGateway');
   const { models_ } = await import('../models');
 

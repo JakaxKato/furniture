@@ -55,6 +55,7 @@ export type Permission =
   | 'orders:read'
   | 'orders:fulfill'
   | 'cases:manage'
+  | 'support:manage'
   | 'audit:read';
 
 const PERMISSIONS: Record<Permission, Role[]> = {
@@ -64,6 +65,7 @@ const PERMISSIONS: Record<Permission, Role[]> = {
   'orders:read': ['admin_ops', 'admin_finance', 'super_admin'],
   'orders:fulfill': ['admin_ops', 'super_admin'],
   'cases:manage': ['admin_finance', 'super_admin'],
+  'support:manage': ['admin_ops', 'admin_finance', 'super_admin'],
   'audit:read': ['super_admin'],
 };
 

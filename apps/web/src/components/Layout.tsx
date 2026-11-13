@@ -3,6 +3,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { isAdmin, useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useStore } from '../context/StoreContext';
+import { InboxBadge } from '../pages/ServicePages';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -53,6 +54,7 @@ export function Layout() {
             </Link>
           </nav>
           <div className="header__actions">
+            {user ? <InboxBadge /> : null}
             {admin ? (
               <Link to="/admin" className="header__action header__action--admin">
                 Panel admin

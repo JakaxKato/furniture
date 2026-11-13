@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test';
+import { authenticator } from 'otplib';
 
 test.describe('alur pembelian pelanggan', () => {
-  test('dari memilih varian sampai status lunas dibaca dari backend', async ({ page }) => {
+  test('pembelian, persiapan admin, tiket bantuan, dan notifikasi pembeli', async ({ page, browser }) => {
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto('/katalog?category=kasur');
     await expect(page.getByRole('heading', { name: 'Katalog', level: 1 })).toBeVisible();
@@ -48,8 +49,59 @@ test.describe('alur pembelian pelanggan', () => {
     await page.waitForURL(/\/akun\/pesanan\//);
     await expect(page.getByText('Pembayaran diterima').first()).toBeVisible();
     await expect(page.getByText('Belum diproses').first()).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Pembayaran diterima' })).toHaveCount(0);
+    await expect(
+      page.getByRole('heading', { name: 'Pembayaran diterima, pesanan sedang disiapkan', exact: true }),
+    ).toBeVisible();
     await expect(page.getByText('Pembayaran sedang ditinjau')).toHaveCount(0);
+    const orderNumber = new URL(page.url()).pathname.split('/').pop()!;
+    await page.getByRole('link', { name: 'Bantuan / retur / refund' }).click();
+    await page.getByLabel('Judul', { exact: true }).fill('Konfirmasi jadwal pengiriman');
+    await page.getByLabel('Jelaskan kendala').fill('Mohon kirim setelah pukul sembilan pagi.');
+    await page.getByRole('button', { name: 'Kirim pengajuan' }).click();
+    await expect(page.getByRole('heading', { name: 'Konfirmasi jadwal pengiriman' })).toBeVisible();
+
+    const adminContext = await browser.newContext();
+    const adminPage = await adminContext.newPage();
+    await adminPage.goto('http://localhost:4100/admin/masuk');
+    await adminPage.getByLabel('Email admin').fill('admin@teduh.example');
+    await adminPage.getByLabel('Kata sandi').fill('AdminDemo123');
+    await adminPage.getByLabel('Kode MFA (6 digit)').fill(authenticator.generate('JBSWY3DPEHPK3PXP'));
+    await adminPage.getByRole('button', { name: 'Masuk panel admin' }).click();
+    await expect(adminPage.getByRole('heading', { name: 'Antrean tindakan' })).toBeVisible();
+    await expect(adminPage.getByRole('link', { name: orderNumber, exact: true })).toBeVisible();
+    await adminPage.screenshot({ path: 'test-results/visual/admin-operations.png', fullPage: true });
+    await adminPage.getByRole('link', { name: orderNumber, exact: true }).click();
+    await adminPage.getByLabel('Penanggung jawab', { exact: true }).selectOption({ label: 'Admin Demo' });
+    await adminPage.getByLabel('Barang diambil sesuai SKU dan jumlah').check();
+    await adminPage.getByLabel('Kemasan selesai').check();
+    await adminPage.getByLabel('Kondisi dan kelengkapan diperiksa').check();
+    await adminPage
+      .getByLabel('Informasi yang ditampilkan ke pembeli')
+      .fill('Pesanan telah dikemas. Pengiriman dijadwalkan besok pagi.');
+    await adminPage.getByRole('button', { name: 'Simpan pembaruan' }).click();
+    await expect(adminPage.getByText('Persiapan dan informasi pembeli diperbarui.')).toBeVisible();
+    await adminPage.goto('http://localhost:4100/admin/layanan');
+    await adminPage
+      .getByLabel('Balasan untuk pembeli / alasan keputusan')
+      .fill('Baik, pengiriman dijadwalkan setelah pukul sembilan.');
+    await adminPage.getByRole('button', { name: 'Ambil tanggung jawab & kirim' }).click();
+    await expect(adminPage.getByText('Baik, pengiriman dijadwalkan setelah pukul sembilan.')).toBeVisible();
+    await page.reload();
+    await expect(page.getByText('Baik, pengiriman dijadwalkan setelah pukul sembilan.')).toBeVisible();
+    await page.goto('/akun/notifikasi');
+    await expect(page.getByText('Pesanan telah dikemas. Pengiriman dijadwalkan besok pagi.')).toBeVisible();
+    await page.getByRole('button', { name: 'Tandai telah dibaca' }).click();
+    await expect(page.getByRole('button', { name: 'Tandai telah dibaca' })).toBeDisabled();
+    await page.goto(`/akun/pesanan/${orderNumber}`);
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(page.locator('.order-items__media img')).toBeVisible();
+    const thumbnail = await page.locator('.order-items__media img').boundingBox();
+    expect(thumbnail!.height).toBeLessThan(80);
+    await page.screenshot({ path: 'test-results/visual/customer-order-390.png', fullPage: true });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(
+      1,
+    );
+    await adminContext.close();
   });
 });
 
@@ -84,9 +136,7 @@ test.describe('katalog responsif dan aksesibilitas filter', () => {
     await page.setViewportSize({ width: 320, height: 760 });
     for (const path of ['/', '/katalog']) {
       await page.goto(path);
-      const overflow = await page.evaluate(
-        () => document.documentElement.scrollWidth - window.innerWidth,
-      );
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       expect(overflow, `overflow horizontal di ${path}`).toBeLessThanOrEqual(1);
     }
   });

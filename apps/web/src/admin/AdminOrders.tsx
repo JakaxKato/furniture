@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react';
+import { OrderOperations } from './Operations';
 import { Link, useParams } from 'react-router-dom';
 import { AdminPageHead, ROLE_LABELS, canManage } from './AdminLayout';
 import { Seo } from '../components/Seo';
@@ -374,6 +375,7 @@ export function AdminOrderDetailPage() {
 
       <div className="admin-detail-grid">
         <div>
+          <OrderOperations number={order.orderNumber} />
           <section className="admin-panel">
             <h2>Tindakan</h2>
             <div className="admin-actions">

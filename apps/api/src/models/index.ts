@@ -115,6 +115,11 @@ const inventorySchema = new Schema(
     physical: { type: Number, required: true, min: 0, default: 0 },
     held: { type: Number, required: true, min: 0, default: 0 },
     allocated: { type: Number, required: true, min: 0, default: 0 },
+    reorderPoint: { type: Number, default: 2, min: 0 },
+    targetStock: { type: Number, default: 10, min: 0 },
+    incoming: { type: Number, default: 0, min: 0 },
+    planningRevision: { type: Number, default: 0 },
+    expectedAt: Date,
   },
   { timestamps: true },
 );
@@ -124,6 +129,7 @@ export type InventoryDoc = InferSchemaType<typeof inventorySchema>;
 export const Inventory: Model<InventoryDoc> = models.Inventory ?? model('Inventory', inventorySchema);
 
 const inventoryEntrySchema = new Schema({
+  receiveKey: { type: String },
   sku: { type: String, required: true },
   productId: { type: Schema.Types.ObjectId, ref: 'Product' },
   orderId: { type: Schema.Types.ObjectId, ref: 'Order' },
@@ -139,6 +145,7 @@ const inventoryEntrySchema = new Schema({
 });
 inventoryEntrySchema.index({ sku: 1, at: -1 });
 inventoryEntrySchema.index({ orderId: 1 });
+inventoryEntrySchema.index({ receiveKey: 1 }, { unique: true, partialFilterExpression: { receiveKey: { $exists: true } } });
 export const InventoryEntry: Model<InferSchemaType<typeof inventoryEntrySchema>> =
   models.InventoryEntry ?? model('InventoryEntry', inventoryEntrySchema);
 
@@ -302,6 +309,18 @@ const orderSchema = new Schema(
       deliveredAt: Date,
     },
     paidAt: Date,
+    operations: {
+      ownerId: { type: Schema.Types.ObjectId, ref: 'User' },
+      ownerName: String,
+      shipBy: Date,
+      expectedDelivery: Date,
+      customerUpdate: { type: String, maxlength: 500 },
+      trackingUrl: String,
+      picked: { type: Boolean, default: false },
+      packed: { type: Boolean, default: false },
+      inspected: { type: Boolean, default: false },
+      revision: { type: Number, default: 0 },
+    },
   },
   { timestamps: true },
 );
@@ -515,7 +534,39 @@ rateLimitBucketSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 export const RateLimitBucket: Model<InferSchemaType<typeof rateLimitBucketSchema>> =
   models.RateLimitBucket ?? model('RateLimitBucket', rateLimitBucketSchema);
 
+const supportTicketSchema = new Schema({
+  number: { type: String, required: true, unique: true },
+  orderId: { type: Schema.Types.ObjectId, ref: 'Order', required: true },
+  orderNumber: { type: String, required: true },
+  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  kind: { type: String, enum: ['help', 'shipping', 'return', 'refund'], required: true },
+  subject: { type: String, required: true, maxlength: 160 },
+  status: { type: String, enum: ['open', 'in_progress', 'waiting_customer', 'approved', 'resolved', 'rejected'], default: 'open' },
+  priority: { type: String, enum: ['normal', 'high'], default: 'normal' },
+  ownerId: { type: Schema.Types.ObjectId, ref: 'User' },
+  ownerName: String,
+  dueAt: { type: Date, required: true },
+  revision: { type: Number, default: 0 },
+  messages: [{
+    author: { type: String, enum: ['customer', 'staff'], required: true },
+    name: { type: String, required: true },
+    body: { type: String, required: true, maxlength: 2000 },
+    evidenceUrl: String,
+    at: { type: Date, default: Date.now },
+  }],
+}, { timestamps: true });
+supportTicketSchema.index({ userId: 1, createdAt: -1 });
+supportTicketSchema.index({ status: 1, dueAt: 1 });
+export const SupportTicket = models.SupportTicket as Model<InferSchemaType<typeof supportTicketSchema>> ?? model('SupportTicket', supportTicketSchema);
+const inboxReadSchema = new Schema({
+  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
+  readThrough: { type: Date, required: true },
+});
+export const InboxRead = models.InboxRead as Model<InferSchemaType<typeof inboxReadSchema>> ?? model('InboxRead', inboxReadSchema);
+
 export const models_ = {
+  SupportTicket,
+  InboxRead,
   User,
   Session,
   PasswordResetToken,

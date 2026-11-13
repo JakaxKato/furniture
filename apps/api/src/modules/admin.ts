@@ -21,6 +21,7 @@ import { adjustPhysical, availableOf, shipAllocation } from '../modules/inventor
 import { refreshAttempt } from '../modules/payments';
 import { toAdminOrder } from '../modules/orderDto';
 import { recordOrderTransition } from '../modules/analytics';
+import { reportRange } from './experience';
 
 export const adminRouter = Router();
 adminRouter.use(requireAuth);
@@ -145,12 +146,13 @@ adminRouter.get(
   '/summary',
   requirePermission('orders:read'),
   asyncHandler(async (_req, res) => {
+    const { start, end } = reportRange();
     const [paid, ready, openCases, lowStock, pendingPayments] = await Promise.all([
-      Order.countDocuments({ paymentStatus: 'paid' }),
-      Order.countDocuments({ shippingStatus: 'ready', shippingHold: { $ne: true } }),
+      Order.countDocuments({ paymentStatus: 'paid', paidAt: { $gte: start, $lt: end } }),
+      Order.countDocuments({ shippingStatus: 'ready', 'shippingHold.active': { $ne: true } }),
       PaymentCase.countDocuments({ status: { $ne: 'resolved' } }),
       Inventory.countDocuments({
-        $expr: { $lte: [{ $subtract: ['$physical', { $add: ['$held', '$allocated'] }] }, 2] },
+        $expr: { $lte: [{ $subtract: ['$physical', { $add: ['$held', '$allocated'] }] }, { $ifNull: ['$reorderPoint', 2] }] },
       }),
       Order.countDocuments({ paymentStatus: { $in: ['pending', 'verifying', 'review'] } }),
     ]);

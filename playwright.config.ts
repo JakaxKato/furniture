@@ -8,23 +8,17 @@ export default defineConfig({
   workers: 1,
   reporter: [['list']],
   use: {
-    baseURL: 'http://localhost:5173',
+    baseURL: 'http://localhost:4100',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
   webServer: [
     {
-      command: 'npm run e2e:server -w @teduh/api',
+      command: 'npm run build && npm run e2e:server -w @teduh/api',
       url: 'http://127.0.0.1:4100/api/v1/health',
       reuseExistingServer: false,
       timeout: 180_000,
-    },
-    {
-      command: 'npm run dev -w @teduh/web -- --port 5173',
-      url: 'http://localhost:5173',
-      reuseExistingServer: false,
-      timeout: 120_000,
-      env: { VITE_API_TARGET: 'http://127.0.0.1:4100' },
+      stdout: 'pipe',
     },
   ],
 });

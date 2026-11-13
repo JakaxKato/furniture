@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { InboxPage, ServicePage } from './pages/ServicePages';
+import { RestockPage } from './admin/Operations';
 import { Layout } from './components/Layout';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
@@ -39,6 +41,8 @@ export function App() {
                   <Route path="lupa-kata-sandi" element={<ForgotPasswordPage />} />
                   <Route path="reset-kata-sandi" element={<ResetPasswordPage />} />
                   <Route path="akun" element={<AccountPage />} />
+                  <Route path="akun/notifikasi" element={<InboxPage />} />
+                  <Route path="akun/bantuan" element={<ServicePage />} />
                   <Route path="akun/pesanan/:orderNumber" element={<OrderDetailPage />} />
                   <Route path="pembayaran-simulasi/:gatewayOrderId" element={<SimulationPaymentPage />} />
                   <Route path="bantuan" element={<HelpPage />} />
@@ -51,6 +55,8 @@ export function App() {
                   <Route path="produk/baru" element={<AdminProductEditPage />} />
                   <Route path="produk/:id" element={<AdminProductEditPage />} />
                   <Route path="inventaris" element={<AdminInventoryPage />} />
+                  <Route path="stok" element={<RestockPage />} />
+                  <Route path="layanan" element={<ServicePage admin />} />
                   <Route path="pengiriman" element={<AdminShippingPage />} />
                   <Route path="pesanan" element={<AdminOrdersPage />} />
                   <Route path="pesanan/:orderNumber" element={<AdminOrderDetailPage />} />

@@ -12,6 +12,7 @@ import { logger } from './lib/logger';
 import { loadAuth } from './middleware/auth';
 import { originAndCsrf } from './middleware/csrf';
 import { adminRouter } from './modules/admin';
+import { experienceRouter } from './modules/experience';
 import { analyticsRouter } from './modules/analyticsRoutes';
 import { authRouter } from './modules/auth';
 import { catalogRouter, storeRouter } from './modules/catalogRoutes';
@@ -108,6 +109,7 @@ export function createApp(options: AppOptions = {}): express.Express {
   app.use('/api/v1/payments/simulation', simulationRouter);
   app.use('/api/v1/webhooks', webhookRouter);
   app.use('/api/v1/admin', adminRouter);
+  app.use('/api/v1/experience', experienceRouter);
 
   app.use('/api', (_req, _res, next) => {
     next(new AppError(404, 'NOT_FOUND', 'Endpoint tidak ditemukan.'));

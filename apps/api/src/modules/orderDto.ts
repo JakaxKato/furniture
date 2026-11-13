@@ -60,6 +60,10 @@ export async function toOrderDetail(order: OrderDocument) {
     orderNumber: order.orderNumber,
     createdAt: order.createdAt,
     email: order.email,
+    updatedAt: order.updatedAt,
+    customerUpdate: order.operations?.customerUpdate ?? null,
+    expectedDelivery: order.operations?.expectedDelivery ?? null,
+    trackingUrl: order.operations?.trackingUrl || null,
     items: order.items.map((item) => ({
       sku: item.sku,
       productSlug: item.productSlug,

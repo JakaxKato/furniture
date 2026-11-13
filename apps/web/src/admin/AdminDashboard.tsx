@@ -4,6 +4,7 @@ import { AdminPageHead, canManage } from './AdminLayout';
 import { Seo } from '../components/Seo';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../lib/api';
+import { OperationalDashboard } from './Operations';
 
 type Summary = { paid: number; ready: number; openCases: number; lowStock: number; pendingPayments: number };
 
@@ -28,19 +29,20 @@ export function AdminDashboard() {
       <Seo title="Panel admin — Teduh" noIndex />
       <AdminPageHead
         eyebrow="Operasional"
-        title="Ringkasan hari ini"
+        title="Pusat operasional"
         lead="Angka diambil langsung dari basis data. Tindakan sensitif tercatat di audit log."
       />
       {error ? <div className="alert alert--error">{error}</div> : null}
       {canRead ? (
         <div className="admin-stat-grid">
-          <Stat label="Pesanan lunas" value={summary?.paid} href="/admin/pesanan?paymentStatus=paid" />
+          <Stat label="Lunas hari ini (WIB)" value={summary?.paid} href="/admin/pesanan?paymentStatus=paid" />
           <Stat label="Siap kirim" value={summary?.ready} href="/admin/pesanan?shippingStatus=ready" />
           <Stat label="Pembayaran dipantau" value={summary?.pendingPayments} href="/admin/pesanan" />
           <Stat label="Kasus terbuka" value={summary?.openCases} href="/admin/kasus" />
-          <Stat label="SKU stok rendah (≤ 2)" value={summary?.lowStock} href="/admin/inventaris" />
+          {canManage(user, 'inventory') && <Stat label="SKU di bawah batas stok" value={summary?.lowStock} href="/admin/stok" />}
         </div>
       ) : null}
+      {canRead ? <OperationalDashboard /> : null}
       <section className="admin-panel">
         <h2>Tautan cepat</h2>
         <div className="admin-links">
